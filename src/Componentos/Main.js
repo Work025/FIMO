@@ -31,6 +31,7 @@ function Main() {
     const cardsRef = useRef([]);
 
     useEffect(() => {
+        const currentCards = cardsRef.current;
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -39,12 +40,12 @@ function Main() {
             });
         }, { threshold: 0.2 });
 
-        cardsRef.current.forEach(card => {
+        currentCards.forEach(card => {
             if (card) observer.observe(card);
         });
 
         return () => {
-            cardsRef.current.forEach(card => {
+            currentCards.forEach(card => {
                 if (card) observer.unobserve(card);
             });
         };

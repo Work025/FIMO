@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import WM1 from "../Assets/WM-medium1.png"
 import WM2 from "../Assets/WM-medium2.png"
 import WM3 from "../Assets/WM-medium3.png"

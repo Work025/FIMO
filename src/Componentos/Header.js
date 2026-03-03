@@ -6,7 +6,7 @@ function Header() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const [activePanel, setActivePanel] = useState(null); // 'search', 'lang', 'cart', 'like'
-    const [itemCount, setItemCount] = useState({ cart: 0, like: 0 });
+    const [itemCount] = useState({ cart: 0, like: 0 });
 
     const toggleMenu = () => setMenuOpen(!menuOpen);
     const closeMenu = () => {
