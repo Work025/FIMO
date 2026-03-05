@@ -1,12 +1,25 @@
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import { useGlobalContext } from "../context/GlobalContext";
 import "../Styles/Header.css";
 
 function Header() {
+    const {
+        language,
+        languages,
+        changeLanguage,
+        searchQuery,
+        setSearchQuery,
+        cartItems,
+        removeFromCart,
+        likedItems,
+        toggleLike,
+        t
+    } = useGlobalContext();
+
     const [menuOpen, setMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const [activePanel, setActivePanel] = useState(null); // 'search', 'lang', 'cart', 'like'
-    const [itemCount] = useState({ cart: 0, like: 0 });
 
     const toggleMenu = () => setMenuOpen(!menuOpen);
     const closeMenu = () => {
@@ -31,14 +44,7 @@ function Header() {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
-    const languages = [
-        { code: 'UZ', name: 'O\'zbekcha' },
-        { code: 'RU', name: 'Русский' },
-        { code: 'EN', name: 'English' },
-        { code: 'TURK', name: 'Türkçe' },
-        { code: 'CHINA', name: '中文' },
-        { code: 'FRENCH', name: 'Français' }
-    ];
+
 
     return (
         <header className={`header ${isScrolled ? "scrolled" : ""}`}>
@@ -52,11 +58,11 @@ function Header() {
 
             <nav className="header-center">
                 <ul className="header-nav-list">
-                    <li><NavLink to="/" end>HOME</NavLink></li>
-                    <li><NavLink to="/blog">BLOG</NavLink></li>
-                    <li><NavLink to="/shop">SHOP</NavLink></li>
-                    <li><NavLink to="/make">CUSTOMIZE</NavLink></li>
-                    <li><NavLink to="/card">FEATURES</NavLink></li>
+                    <li><NavLink to="/" end>{t('home')}</NavLink></li>
+                    <li><NavLink to="/blog">{t('blog')}</NavLink></li>
+                    <li><NavLink to="/shop">{t('shop')}</NavLink></li>
+                    <li><NavLink to="/make">{t('customize')}</NavLink></li>
+                    <li><NavLink to="/card">{t('features')}</NavLink></li>
                 </ul>
             </nav>
 
@@ -64,7 +70,7 @@ function Header() {
                 <div className="header-tools">
                     {/* LANGUAGE */}
                     <button className={`tool-btn lang-btn ${activePanel === 'lang' ? 'active' : ''}`} onClick={() => togglePanel('lang')}>
-                        <span>EN</span>
+                        <span>{language}</span>
                     </button>
 
                     {/* SEARCH */}
@@ -75,13 +81,13 @@ function Header() {
                     {/* LIKE */}
                     <button className={`tool-btn like-btn ${activePanel === 'like' ? 'active' : ''}`} onClick={() => togglePanel('like')}>
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                        {itemCount.like > 0 && <span className="badge">{itemCount.like}</span>}
+                        {likedItems.length > 0 && <span className="badge">{likedItems.length}</span>}
                     </button>
 
                     {/* CART */}
                     <button className={`tool-btn cart-btn ${activePanel === 'cart' ? 'active' : ''}`} onClick={() => togglePanel('cart')}>
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-                        {itemCount.cart > 0 && <span className="badge">{itemCount.cart}</span>}
+                        {cartItems.length > 0 && <span className="badge">{cartItems.length}</span>}
                     </button>
 
                     {/* MOBILE MENU TOGGLE */}
@@ -99,8 +105,14 @@ function Header() {
             <div className={`panel search-panel ${activePanel === 'search' ? 'open' : ''}`}>
                 <div className="panel-container">
                     <div className="search-bar">
-                        <input type="text" placeholder="Search for products, categories..." autoFocus />
-                        <button className="search-submit">SEARCH</button>
+                        <input
+                            type="text"
+                            placeholder={t('search_placeholder')}
+                            autoFocus
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                        <button className="search-submit">{t('search')}</button>
                     </div>
                     <div className="search-filters">
                         <div className="filter-group">
@@ -126,7 +138,7 @@ function Header() {
             <div className={`panel lang-panel ${activePanel === 'lang' ? 'open' : ''}`}>
                 <div className="panel-container lang-grid">
                     {languages.map(lang => (
-                        <div key={lang.code} className="lang-item" onClick={() => setActivePanel(null)}>
+                        <div key={lang.code} className="lang-item" onClick={() => { changeLanguage(lang.code); setActivePanel(null); }}>
                             <span className="l-code">{lang.code}</span>
                             <span className="l-name">{lang.name}</span>
                         </div>
@@ -134,13 +146,67 @@ function Header() {
                 </div>
             </div>
 
-            {/* LIKE/CART FALLBACK PANEL */}
+            {/* LIKE/CART SIDE PANEL */}
             <div className={`panel side-panel ${activePanel === 'cart' || activePanel === 'like' ? 'open' : ''}`}>
                 <div className="panel-container">
-                    <h3>{activePanel === 'cart' ? 'SHOPPING BAG' : 'MY WISHLIST'}</h3>
-                    <div className="empty-state">
-                        <p>No items found. Start exploring!</p>
-                        <button className="panel-action-btn" onClick={() => setActivePanel(null)}>CONTINUE SHOPPING</button>
+                    <div className="panel-header">
+                        <h3>{activePanel === 'cart' ? t('cart') : t('wishlist')}</h3>
+                        <button className="close-panel" onClick={() => setActivePanel(null)}>&times;</button>
+                    </div>
+
+                    <div className="panel-content">
+                        {activePanel === 'cart' ? (
+                            cartItems.length > 0 ? (
+                                <div className="panel-items">
+                                    {cartItems.map((item) => (
+                                        <div key={item.cartId} className="side-item">
+                                            <div className="side-item-img">
+                                                <img src={item.img} alt={item.title} />
+                                            </div>
+                                            <div className="side-item-info">
+                                                <h4>{item.title}</h4>
+                                                <p className="price">${item.price}</p>
+                                                <button className="remove-item" onClick={() => removeFromCart(item.cartId)}>{t('remove')}</button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                    <div className="panel-footer">
+                                        <div className="total-box">
+                                            <span>TOTAL:</span>
+                                            <span>${cartItems.reduce((acc, item) => acc + item.price, 0).toFixed(2)}</span>
+                                        </div>
+                                        <button className="checkout-btn">{t('buy_now')}</button>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="empty-state">
+                                    <p>{t('empty_state')}</p>
+                                    <button className="panel-action-btn" onClick={() => setActivePanel(null)}>{t('continue_shopping')}</button>
+                                </div>
+                            )
+                        ) : (
+                            likedItems.length > 0 ? (
+                                <div className="panel-items">
+                                    {likedItems.map((item) => (
+                                        <div key={item.id} className="side-item">
+                                            <div className="side-item-img">
+                                                <img src={item.img} alt={item.title} />
+                                            </div>
+                                            <div className="side-item-info">
+                                                <h4>{item.title}</h4>
+                                                <p className="price">${item.price}</p>
+                                                <button className="remove-item" onClick={() => toggleLike(item)}>{t('remove')}</button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="empty-state">
+                                    <p>{t('empty_state')}</p>
+                                    <button className="panel-action-btn" onClick={() => setActivePanel(null)}>{t('continue_shopping')}</button>
+                                </div>
+                            )
+                        )}
                     </div>
                 </div>
             </div>
@@ -148,11 +214,11 @@ function Header() {
             {/* MOBILE NAVIGATION OVERLAY */}
             <div className={`mobile-nav ${menuOpen ? "open" : ""}`}>
                 <ul className="mobile-ul">
-                    <li><NavLink to="/" onClick={closeMenu}>HOME</NavLink></li>
-                    <li><NavLink to="/blog" onClick={closeMenu}>BLOG</NavLink></li>
-                    <li><NavLink to="/shop" onClick={closeMenu}>SHOP</NavLink></li>
-                    <li><NavLink to="/make" onClick={closeMenu}>CUSTOMIZE</NavLink></li>
-                    <li><NavLink to="/card" onClick={closeMenu}>FEATURES</NavLink></li>
+                    <li><NavLink to="/" onClick={closeMenu}>{t('home')}</NavLink></li>
+                    <li><NavLink to="/blog" onClick={closeMenu}>{t('blog')}</NavLink></li>
+                    <li><NavLink to="/shop" onClick={closeMenu}>{t('shop')}</NavLink></li>
+                    <li><NavLink to="/make" onClick={closeMenu}>{t('customize')}</NavLink></li>
+                    <li><NavLink to="/card" onClick={closeMenu}>{t('features')}</NavLink></li>
                 </ul>
             </div>
 

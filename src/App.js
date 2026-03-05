@@ -7,6 +7,8 @@ import Shop from "./Pages/Shop";
 import Card from "./Pages/Card";
 import MakeStyle from "./Componentos/MakeStyle";
 import Loader from "./Componentos/Loader";
+import Footer from "./Componentos/Footer"
+import ScrollToTop from "./Componentos/ScrollToTop";
 import './App.css';
 
 function App() {
@@ -14,6 +16,7 @@ function App() {
 
   return (
     <Router>
+      <ScrollToTop />
       {isLoading && <Loader onFinish={() => setIsLoading(false)} />}
       <Header />
       <main className="page-wrapper">
@@ -25,6 +28,7 @@ function App() {
           <Route path="/make" element={<MakeStyle />} />
         </Routes>
       </main>
+      <Footer />
     </Router>
   );
 }

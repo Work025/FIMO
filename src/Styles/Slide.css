@@ -206,6 +206,32 @@
     background: rgba(255, 255, 255, 0.05);
 }
 
+.fav-btn.active {
+    background: rgba(255, 50, 50, 0.2);
+    border-color: #ff3232;
+    color: #ff3232;
+}
+
+/* NO RESULTS */
+.no-results-slide {
+    text-align: center;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    margin-bottom: 2rem;
+}
+
+.no-results-slide h2 {
+    font-size: 1.5rem;
+    color: var(--f-white);
+    margin-bottom: 1rem;
+}
+
+.no-results-slide p {
+    color: var(--f-light-gray);
+}
+
 /* SIDE VISUAL */
 .side-visual {
     flex: 1.5;

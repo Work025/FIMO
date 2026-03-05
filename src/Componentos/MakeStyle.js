@@ -1,10 +1,12 @@
 import React, { useState, Suspense } from "react";
+import { useGlobalContext } from "../context/GlobalContext";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment, ContactShadows } from "@react-three/drei";
 import TshirtModel from "./TshirtModel";
 import "../Styles/MakeStyle.css";
 
 function MakeStyle() {
+    const { addToCart, t } = useGlobalContext();
     const [config, setConfig] = useState({
         color: "#ffffff",
         size: "M",
@@ -51,8 +53,8 @@ function MakeStyle() {
         <div className="makestyle-page">
             <div className="makestyle-visual">
                 <div className="visual-overlay">
-                    <p className="subtitle">FIMO CUSTOM STUDIO</p>
-                    <h1 className="title">DESIGN YOURS</h1>
+                    <p className="subtitle">{t('custom_studio')}</p>
+                    <h1 className="title">{t('design_yours')}</h1>
                 </div>
 
                 <div className="visual-controls">
@@ -60,7 +62,7 @@ function MakeStyle() {
                         className={`control-tab ${autoRotate ? "active" : ""}`}
                         onClick={() => setAutoRotate(!autoRotate)}
                     >
-                        {autoRotate ? "PAUSE ROTATION" : "AUTO ROTATE"}
+                        {autoRotate ? t('pause_rotation') : t('auto_rotate')}
                     </button>
                 </div>
 
@@ -90,7 +92,7 @@ function MakeStyle() {
             <div className="makestyle-controls">
                 <div className="control-section">
                     <div className="section-header">
-                        <h3>SELECT COLOR</h3>
+                        <h3>{t('select_color')}</h3>
                         <span className="selected-value">{colors.find(c => c.value === config.color)?.name}</span>
                     </div>
                     <div className="color-options">
@@ -108,7 +110,7 @@ function MakeStyle() {
 
                 <div className="control-group">
                     <div className="control-section">
-                        <h3>SIZE</h3>
+                        <h3>{t('sizes_label').replace(':', '')}</h3>
                         <div className="size-selector">
                             {sizes.map((s) => (
                                 <button
@@ -123,7 +125,7 @@ function MakeStyle() {
                     </div>
 
                     <div className="control-section">
-                        <h3>FABRIC</h3>
+                        <h3>{t('fabric')}</h3>
                         <div className="fabric-selector-btns">
                             {fabrics.map((f) => (
                                 <button
@@ -139,36 +141,45 @@ function MakeStyle() {
                 </div>
 
                 <div className="control-section promo-section">
-                    <h3>PROMO CODE</h3>
+                    <h3>{t('promo_code')}</h3>
                     <div className="promo-input-wrapper">
                         <input
                             type="text"
-                            placeholder="Enter code..."
+                            placeholder={t('enter_code')}
                             value={promoInput}
                             onChange={(e) => setPromoInput(e.target.value)}
                             className="promo-input"
                             disabled={discount > 0}
                         />
                         {discount > 0 ? (
-                            <button className="promo-btn clear" onClick={handleClearPromo}>CLEAR</button>
+                            <button className="promo-btn clear" onClick={handleClearPromo}>{t('clear')}</button>
                         ) : (
-                            <button className="promo-btn" onClick={handleApplyPromo}>APPLY</button>
+                            <button className="promo-btn" onClick={handleApplyPromo}>{t('apply')}</button>
                         )}
                     </div>
-                    {discount > 0 && <p className="promo-success">10% discount applied!</p>}
+                    {discount > 0 && <p className="promo-success">10% {t('discount_applied') || 'discount applied!'}</p>}
                 </div>
 
                 <div className="makestyle-footer">
                     <div className="price-info">
-                        <span className="label">ESTIMATED TOTAL</span>
+                        <span className="label">{t('estimated_total')}</span>
                         <div className="price-row">
                             <span className="currency">$</span>
                             <span className="value">{finalPrice.toFixed(2)}</span>
                             {discount > 0 && <span className="original-price">${basePrice.toFixed(2)}</span>}
                         </div>
                     </div>
-                    <button className="add-bag-btn">
-                        <span>CONFIRM DESIGN</span>
+                    <button
+                        className="add-bag-btn"
+                        onClick={() => addToCart({
+                            id: `custom-${Date.now()}`,
+                            title: "Custom Design",
+                            about: `${config.color} | ${config.size} | ${config.fabric}`,
+                            price: finalPrice,
+                            config: config
+                        })}
+                    >
+                        <span>{t('confirm_design')}</span>
                         <div className="btn-icon">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
                         </div>

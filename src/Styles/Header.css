@@ -319,6 +319,144 @@
     color: var(--h-black);
 }
 
+/* SIDE PANEL ITEMS */
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--h-border);
+    padding-bottom: 15px;
+}
+
+.panel-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+}
+
+.close-panel {
+    background: none;
+    border: none;
+    color: var(--h-white);
+    font-size: 2rem;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.panel-items {
+    max-height: 60vh;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.panel-items::-webkit-scrollbar {
+    width: 4px;
+}
+
+.panel-items::-webkit-scrollbar-thumb {
+    background: var(--h-border);
+    border-radius: 10px;
+}
+
+.side-item {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 25px;
+    text-align: left;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 10px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.side-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.side-item-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.side-item-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.side-item-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.side-item-info h4 {
+    margin: 0 0 5px 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.side-item-info .price {
+    color: var(--h-gray);
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+}
+
+.remove-item {
+    background: none;
+    border: none;
+    color: #ff4d4d;
+    font-size: 0.7rem;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 0;
+    width: fit-content;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+}
+
+.remove-item:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+.panel-footer {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid var(--h-border);
+}
+
+.total-box {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 800;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+}
+
+.checkout-btn {
+    width: 100%;
+    background: var(--h-white);
+    color: var(--h-black);
+    border: none;
+    padding: 15px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.checkout-btn:hover {
+    background: #eeeeee;
+    transform: translateY(-2px);
+}
+
 /* OVERLAY */
 .header-overlay {
     position: fixed;

@@ -240,7 +240,55 @@
     }
 }
 
-/* Responsive */
+/* Card Actions */
+.card-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.action-btn {
+    padding: 12px 25px;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.action-btn.cart-btn {
+    background: #fff;
+    color: #000;
+    flex: 1;
+}
+
+.action-btn.cart-btn:hover {
+    background: #ccc;
+    transform: translateY(-2px);
+}
+
+.action-btn.like-btn {
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    width: 50px;
+    padding: 0;
+}
+
+.action-btn.like-btn.active {
+    background: rgba(255, 50, 50, 0.2);
+    border-color: #ff3232;
+    color: #ff3232;
+}
+
+.action-btn.like-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
 @media (max-width: 960px) {
     .main {
         padding: 80px 5%;

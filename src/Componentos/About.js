@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useGlobalContext } from '../context/GlobalContext';
 import '../Styles/About.css';
 
 function About() {
+    const { t } = useGlobalContext();
     const [isVisible, setIsVisible] = useState(false);
     const aboutRef = useRef(null);
 
@@ -33,8 +35,8 @@ function About() {
                     <div className="about-glass-panel">
                         <div className="glass-content">
                             <span className="glass-badge">EST. 2024</span>
-                            <h3>Redefining Quality.</h3>
-                            <p>Premium sustainable fabrics designed for exactly who you are.</p>
+                            <h3>{t('redefining_quality')}</h3>
+                            <p>{t('premium_desc')}</p>
                         </div>
                         <div className="glow-orb"></div>
                     </div>
@@ -42,30 +44,30 @@ function About() {
 
                 {/* Typography / Story */}
                 <div className="about-text">
-                    <h2 className="gradient-text">The Story of FIMO</h2>
+                    <h2 className="gradient-text">{t('story_title')}</h2>
                     <p className="lead-text">
-                        We started with a simple belief: Clothing should not only look stunning but feel like a second skin.
+                        {t('story_lead')}
                     </p>
                     <p className="body-text">
-                        Every thread we select, every stitch we make is guided by our obsession with quality. Our garments undergo rigorous testing and are crafted from 100% organic cotton to ensure unparalleled durability and breathability.
+                        {t('story_body')}
                     </p>
 
                     <div className="stats-grid">
                         <div className="stat-item">
                             <h4>100%</h4>
-                            <span>Organic Cotton</span>
+                            <span>{t('organic_cotton')}</span>
                         </div>
                         <div className="stat-item">
                             <h4>24/7</h4>
-                            <span>Ultimate Comfort</span>
+                            <span>{t('ultimate_comfort')}</span>
                         </div>
                         <div className="stat-item">
                             <h4>0%</h4>
-                            <span>Harsh Chemicals</span>
+                            <span>{t('no_chemicals')}</span>
                         </div>
                     </div>
 
-                    <button className="about-btn">Explore Quality</button>
+                    <button className="about-btn">{t('explore_quality')}</button>
                 </div>
             </div>
         </section>

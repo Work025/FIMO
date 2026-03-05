@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useGlobalContext } from '../context/GlobalContext';
 import '../Styles/List.css';
 
 // Updated blog/feature data for FIMO Clothing & Sports Brand
@@ -53,9 +54,16 @@ const blogData = [
 ];
 
 function List() {
+    const { searchQuery, addToCart, toggleLike, likedItems, t } = useGlobalContext();
     const sectionRef = useRef(null);
     const [isVisible, setIsVisible] = useState(false);
     const [selectedArticle, setSelectedArticle] = useState(null);
+
+    const filteredArticles = blogData.filter(item =>
+        item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.category.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -101,12 +109,12 @@ function List() {
     return (
         <section className="list-section" ref={sectionRef}>
             <div className="list-header">
-                <h2 className="gradient-title">Latest from FIMO</h2>
-                <p>Insights, news, and behind the seams.</p>
+                <h2 className="gradient-title">{t('latest_title')}</h2>
+                <p>{t('latest_desc')}</p>
             </div>
 
             <div className="list-grid">
-                {blogData.map((item, index) => (
+                {filteredArticles.map((item, index) => (
                     <article
                         key={item.id}
                         id={`blog-card-${item.id}`}
@@ -130,9 +138,20 @@ function List() {
                                     className="read-more-btn"
                                     onClick={() => handleReadMore(item)}
                                 >
-                                    Read Article
+                                    {t('read_article')}
                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14m-7-7 7 7-7 7" /></svg>
                                 </button>
+                                <div className="card-actions-mini">
+                                    <button
+                                        className={`mini-action-btn ${likedItems.find(l => l.id === item.id) ? 'active' : ''}`}
+                                        onClick={() => toggleLike(item)}
+                                    >
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill={likedItems.find(l => l.id === item.id) ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                                    </button>
+                                    <button className="mini-action-btn" onClick={() => addToCart(item)}>
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path></svg>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </article>
@@ -165,16 +184,16 @@ function List() {
                                 <p className="modal-body-text">{selectedArticle.fullContent}</p>
 
                                 <div className="modal-form">
-                                    <label htmlFor="user-email" className="modal-input-label">Notify me for new collections</label>
+                                    <label htmlFor="user-email" className="modal-input-label">{t('notify_label')}</label>
                                     <div className="modal-input-group">
                                         <input
                                             type="email"
                                             id="user-email"
-                                            placeholder="Enter your email"
+                                            placeholder={t('email_placeholder')}
                                             className="modal-input"
                                         />
                                         <button className="modal-submit-btn">
-                                            Subscribe
+                                            {t('subscribe')}
                                         </button>
                                     </div>
                                 </div>

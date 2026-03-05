@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useGlobalContext } from "../context/GlobalContext";
 import WM1 from "../Assets/WM-medium1.png"
 import WM2 from "../Assets/WM-medium2.png"
 import WM3 from "../Assets/WM-medium3.png"
@@ -25,14 +26,26 @@ const slidesData = [
 ];
 
 function Slide() {
+    const { searchQuery, addToCart, toggleLike, likedItems, t } = useGlobalContext();
+
+    const filteredSlides = slidesData.filter(slide =>
+        slide.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        slide.subtitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        slide.description.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    const dataLength = filteredSlides.length;
+
+    // Fallback if no slides match search
+    const hasSlides = dataLength > 0;
+
     // Virtual index for infinite looping
     const [virtualCurrent, setVirtualCurrent] = useState(slidesData.length * 1000);
     const [isAnimating, setIsAnimating] = useState(false);
     const [dragStart, setDragStart] = useState(null);
     const [dragOffset, setDragOffset] = useState(0);
 
-    const dataLength = slidesData.length;
-    const currentRealIndex = virtualCurrent % dataLength;
+    const currentRealIndex = hasSlides ? virtualCurrent % dataLength : 0;
 
     const handleNext = () => {
         if (isAnimating) return;
@@ -65,12 +78,12 @@ function Slide() {
         setDragOffset(0);
     };
 
-    const currentSlide = slidesData[currentRealIndex];
+    const currentSlide = hasSlides ? filteredSlides[currentRealIndex] : null;
 
     return (
         <div className="unified-slide-container" onMouseMove={handleMouseMove} onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp}>
             <div className="bg-dynamic-wrap">
-                {slidesData.map((slide, index) => (
+                {filteredSlides.map((slide, index) => (
                     <div
                         key={`bg-${slide.id}`}
                         className={`bg-frame ${currentRealIndex === index ? 'active' : ''}`}
@@ -86,7 +99,7 @@ function Slide() {
                         <h2>FIMO <span className="highlight">/ WORKS</span></h2>
                     </div>
                     <div className="slide-pagination">
-                        {slidesData.map((_, index) => (
+                        {filteredSlides.map((_, index) => (
                             <div
                                 key={index}
                                 className={`pag-item ${currentRealIndex === index ? "active" : ""}`}
@@ -105,33 +118,49 @@ function Slide() {
                 <main className="slide-viewport">
                     <div className="side-info">
                         <div className={`info-scrolled ${isAnimating ? "fade-out" : "fade-in"}`}>
-                            <span className="brand-label">FIMO – Your brand, your style</span>
-                            <h2 className="main-display-title">
-                                {currentSlide.title.split(' ').map((word, i) => (
-                                    <span key={i} className="title-word-mask">
-                                        <span className="title-word">{word}</span>
-                                    </span>
-                                ))}
-                            </h2>
-                            <p className="summary-text">{currentSlide.description}</p>
+                            {hasSlides ? (
+                                <>
+                                    <span className="brand-label">FIMO – Your brand, your style</span>
+                                    <h2 className="main-display-title">
+                                        {currentSlide.title.split(' ').map((word, i) => (
+                                            <span key={i} className="title-word-mask">
+                                                <span className="title-word">{word}</span>
+                                            </span>
+                                        ))}
+                                    </h2>
+                                    <p className="summary-text">{currentSlide.description}</p>
+                                </>
+                            ) : (
+                                <div className="no-results-slide">
+                                    <h2>{t('no_matches')}</h2>
+                                    <p>{t('empty_state')}</p>
+                                </div>
+                            )}
 
-                            <div className="detail-tags">
-                                <span className="tag-item">PREMIUM COTTON</span>
-                                <span className="tag-item">CLASSIC FIT</span>
-                            </div>
+                            {hasSlides && (
+                                <div className="detail-tags">
+                                    <span className="tag-item">{t('premium_stitching').toUpperCase()}</span>
+                                    <span className="tag-item">{t('perfect_fit').toUpperCase()}</span>
+                                </div>
+                            )}
 
-                            <div className="slide-actions">
-                                <button className="explore-btn">VIEW COLLECTION</button>
-                                <button className="fav-btn">
-                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" /></svg>
-                                </button>
-                            </div>
+                            {hasSlides && (
+                                <div className="slide-actions">
+                                    <button className="explore-btn" onClick={() => addToCart(currentSlide)}>{t('add_to_bag')}</button>
+                                    <button
+                                        className={`fav-btn ${likedItems.find(l => l.id === currentSlide.id) ? 'active' : ''}`}
+                                        onClick={() => toggleLike(currentSlide)}
+                                    >
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill={likedItems.find(l => l.id === currentSlide.id) ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" /></svg>
+                                    </button>
+                                </div>
+                            )}
                         </div>
                     </div>
 
                     <div className="side-visual">
                         <div className="stack-area" onMouseDown={handleMouseDown}>
-                            {slidesData.map((slide, index) => {
+                            {filteredSlides.map((slide, index) => {
                                 // Shortest path circular logic
                                 let diff = index - currentRealIndex;
                                 if (diff > dataLength / 2) diff -= dataLength;
