@@ -5,13 +5,13 @@
     --accent-dim: rgba(255, 255, 255, 0.6);
     --bg-dark: #050505;
     --glass: rgba(255, 255, 255, 0.03);
-    --glass-heavy: rgba(255, 255, 255, 0.06);
+    --glass-heavy: rgba(255, 255, 255, 0.05);
     --glass-border: rgba(255, 255, 255, 0.08);
     --glass-border-bright: rgba(255, 255, 255, 0.2);
-    --text-muted: #666;
+    --text-muted: #888888;
     --success: #4ade80;
     --error: #ff4d4d;
-    --transition-smooth: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-smooth: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .makestyle-page {
@@ -515,25 +515,88 @@
         flex-direction: column;
         height: auto;
         overflow-y: auto;
+        scrollbar-width: none;
+    }
+
+    .makestyle-page::-webkit-scrollbar {
+        display: none;
     }
 
     .makestyle-visual {
-        height: 60vh;
-        min-height: 500px;
+        width: 100%;
+        height: 55vh;
+        min-height: 400px;
     }
 
     .visual-overlay {
-        top: 40px;
-        left: 40px;
+        top: 30px;
+        left: 30px;
+    }
+
+    .visual-overlay .title {
+        font-size: 3.5rem;
     }
 
     .makestyle-controls {
-        background: #080808;
-        padding: 50px 30px;
+        background: var(--bg-dark);
+        padding: 40px 20px;
         backdrop-filter: none;
+        gap: 30px;
+        border-left: none;
+        border-top: 1px solid var(--glass-border);
     }
 
     .makestyle-controls::before {
         display: none;
+    }
+
+    .makestyle-footer {
+        padding-top: 20px;
+    }
+
+    .add-bag-btn {
+        height: 70px;
+        padding: 0 30px;
+        border-radius: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .visual-overlay .title {
+        font-size: 2.8rem;
+    }
+
+    .visual-controls {
+        bottom: 30px;
+        padding: 5px;
+        width: 90%;
+        justify-content: center;
+    }
+
+    .control-tab {
+        padding: 10px 15px;
+        font-size: 0.65rem;
+        flex: 1;
+        text-align: center;
+    }
+
+    .price-row .value {
+        font-size: 2.8rem;
+    }
+
+    .add-bag-btn span {
+        font-size: 0.9rem;
+    }
+
+    .color-btn {
+        width: 36px;
+        height: 36px;
+    }
+
+    .size-btn,
+    .fabric-btn {
+        min-width: 70px;
+        height: 48px;
+        font-size: 0.8rem;
     }
 }

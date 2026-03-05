@@ -17,14 +17,15 @@
     min-height: calc(100vh - 120px);
     display: flex;
     align-items: center;
-    padding: 20px 5% 20px 10%;
+    padding: 40px 5% 40px 8%;
     justify-content: space-between;
-    border-radius: 30px;
+    border-radius: 40px;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     overflow: hidden;
-    box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.8);
+    box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .hero-about-list {
@@ -352,87 +353,89 @@
 @media (max-width: 1024px) {
     .hero {
         padding: 10px;
-        min-height: auto;
+        min-height: 100vh;
     }
 
     .hero-content {
         flex-direction: column;
-        padding: 40px 5%;
+        padding: 60px 5% 40px;
         height: auto;
-        min-height: auto;
-        gap: 40px;
-        border-radius: 20px;
-    }
-
-    .hero-about-list {
-        width: 100%;
-        gap: 30px;
-        order: 2;
-        padding-bottom: 30px;
-        text-align: center;
-        align-items: center;
-    }
-
-    .list1-header {
-        justify-content: center;
-    }
-
-    .hero-desc {
-        max-width: 100%;
-    }
-
-    .btn-buy {
-        margin: 0 auto;
+        min-height: 100vh;
+        gap: 60px;
+        border-radius: 30px;
+        justify-content: flex-start;
     }
 
     .hero-imgs {
         width: 100%;
         height: 40vh;
         order: 1;
-        min-height: 300px;
+        min-height: 350px;
+        margin-bottom: -40px;
     }
 
-    .hero-main-img {
-        max-width: 250px;
-    }
-
-    .hero-robot {
-        display: none;
-    }
-
-    .list3-aside.glass-panel {
-        max-width: 100%;
-        padding: 20px;
-    }
-
-    .info-block {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .info-label {
+    .hero-about-list {
         width: 100%;
+        gap: 40px;
+        order: 2;
+        text-align: center;
+        align-items: center;
+    }
+
+    .hero-title {
+        font-size: clamp(3rem, 10vw, 4.5rem);
         text-align: center;
     }
 
-    .info-values {
-        justify-content: center;
+    .hero-desc {
+        max-width: 90%;
+        margin: 0 auto;
+    }
+
+    .btn-buy {
+        margin: 0 auto;
+    }
+
+    .hero-main-img {
+        max-width: 320px;
+    }
+
+    .list3-aside.glass-panel {
+        max-width: 600px;
+        margin: 0 auto;
     }
 }
 
 @media (max-width: 480px) {
+    .hero-content {
+        padding: 80px 5% 40px;
+    }
+
     .hero-title {
-        font-size: 2.5rem;
+        font-size: 2.8rem;
     }
 
     .hero-imgs {
-        height: 35vh;
+        height: 30vh;
         min-height: 250px;
     }
 
+    .hero-main-img {
+        max-width: 200px;
+    }
+
     .nav-btn {
-        width: 35px;
-        height: 35px;
+        width: 38px;
+        height: 38px;
+        font-size: 0.9rem;
+    }
+
+    .info-block {
+        gap: 15px;
+    }
+
+    .info-badge {
         font-size: 0.8rem;
+        padding: 5px 12px;
     }
 }

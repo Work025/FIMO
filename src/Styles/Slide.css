@@ -1,13 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;600;700;800&family=Inter:wght@300;400;600&display=swap');
 
 :root {
-    --f-black: #000000;
+    --f-black: #050505;
     --f-white: #ffffff;
     --f-gray: #888888;
-    --f-light-gray: #aaaaaa;
-    --f-glass: rgba(255, 255, 255, 0.05);
-    --f-border: rgba(255, 255, 255, 0.1);
-    --f-ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --f-light-gray: #b0b0b0;
+    --f-glass: rgba(255, 255, 255, 0.03);
+    --f-border: rgba(255, 255, 255, 0.08);
+    --f-ease: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .unified-slide-container {
@@ -382,26 +382,33 @@
 
 @media (max-width: 1024px) {
     .unified-slide-container {
-        padding: 0 5%;
+        padding: 80px 5% 40px;
         height: auto;
         min-height: 100vh;
     }
 
     .slide-viewport {
         flex-direction: column;
-        padding-top: 5vh;
-        gap: 60px;
+        padding-top: 2rem;
+        gap: 40px;
     }
 
     .side-info {
         width: 100%;
         text-align: center;
         align-items: center;
+        order: 2;
+    }
+
+    .main-display-title {
+        font-size: clamp(2.5rem, 8vw, 4rem);
+        margin-bottom: 1.5rem;
     }
 
     .summary-text {
         margin-inline: auto;
-        max-width: 100%;
+        max-width: 90%;
+        font-size: 1rem;
     }
 
     .detail-tags,
@@ -413,45 +420,52 @@
         width: 100%;
         padding-right: 0;
         align-items: center;
+        order: 1;
     }
 
     .stack-area {
         justify-content: center;
-        height: 40vh;
-        min-height: 350px;
+        height: 35vh;
+        min-height: 300px;
     }
 
     .visual-card {
-        width: 250px;
-        height: 330px;
+        width: 240px;
+        height: 320px;
     }
 
     .footer-nav {
-        margin-top: 40px;
+        margin-top: 30px;
         max-width: 100%;
-        justify-content: space-between;
+        justify-content: center;
+        gap: 20px;
     }
 
-    .bottom-hint {
+    .p-bar {
         display: none;
     }
 }
 
 @media (max-width: 480px) {
+    .unified-slide-container {
+        padding: 60px 5% 40px;
+    }
+
     .main-display-title {
-        font-size: 3rem;
+        font-size: 2.5rem;
     }
 
     .stack-area {
-        min-height: 300px;
+        min-height: 250px;
     }
 
     .visual-card {
-        width: 200px;
-        height: 270px;
+        width: 180px;
+        height: 240px;
     }
 
-    .p-bar {
-        display: none;
+    .p-btn {
+        width: 45px;
+        height: 45px;
     }
 }

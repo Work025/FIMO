@@ -1,0 +1,254 @@
+[
+    {
+        "id": 1,
+        "number": "1",
+        "title": "Vibrant Shot",
+        "url": "https://images.iimg.live/images/vibrant-shot-6282.webp",
+        "shop": true,
+        "card": false,
+        "like": false
+    },
+    {
+        "id": 2,
+        "number": "2",
+        "title": "Brilliant Photo",
+        "url": "https://images.iimg.live/images/brilliant-photo-5234.webp",
+        "shop": true,
+        "card": false,
+        "like": false
+    },
+    {
+        "id": 3,
+        "number": "3",
+        "title": "Fantastic Art",
+        "url": "https://images.iimg.live/images/fantastic-art-6335.webp",
+        "shop": true,
+        "card": false,
+        "like": false
+    },
+    {
+        "id": 4,
+        "number": "4",
+        "title": "Dynamic Vision",
+        "url": "https://images.iimg.live/images/dynamic-vision-6924.webp",
+        "shop": true,
+        "card": false,
+        "like": false
+    },
+    {
+        "id": 5,
+        "number": "6",
+        "title": "Perfect Vision",
+        "url": "https://images.iimg.live/images/perfect-vision-9670.webp",
+        "shop": true,
+        "card": false,
+        "like": false
+    },
+    {
+        "id": 6,
+        "number": "7",
+        "title": "Ultimate Masterpiece",
+        "url": "https://images.iimg.live/images/ultimate-masterpiece-9880.webp",
+        "shop": true,
+        "card": false,
+        "like": false
+    },
+    {
+        "id": 7,
+        "number": "8",
+        "title": "Spectacular Picture",
+        "url": "https://images.iimg.live/images/spectacular-picture-5593.webp",
+        "shop": true,
+        "card": false,
+        "like": false
+    },
+    {
+        "id": 8,
+        "number": "9",
+        "title": "Brilliant Photography",
+        "url": "https://images.iimg.live/images/brilliant-photography-2487.webp",
+        "shop": true,
+        "card": false,
+        "like": false
+    },
+    {
+        "id": 9,
+        "number": "10",
+        "title": "Radiant Vision",
+        "url": "https://images.iimg.live/images/radiant-vision-6385.webp",
+        "shop": true,
+        "card": false,
+        "like": false
+    },
+    {
+        "id": 10,
+        "number": "11",
+        "title": "Perfect Photo",
+        "url": "https://images.iimg.live/images/perfect-photo-2243.webp",
+        "shop": true,
+        "card": false,
+        "like": false
+    },
+    {
+        "id": 11,
+        "number": "12",
+        "title": "Perfect Snap",
+        "url": "https://images.iimg.live/images/perfect-snap-7398.webp",
+        "shop": true,
+        "card": false,
+        "like": false
+    },
+    {
+        "id": 12,
+        "number": "13",
+        "title": "Cool Snap",
+        "url": "https://images.iimg.live/images/cool-snap-9399.webp",
+        "shop": true,
+        "card": false,
+        "like": false
+    },
+    {
+        "id": 13,
+        "number": "14",
+        "title": "Radiant Snap",
+        "url": "https://images.iimg.live/images/radiant-snap-3224.webp",
+        "shop": true,
+        "card": false,
+        "like": false
+    },
+    {
+        "id": 14,
+        "number": "15",
+        "title": "Vibrant Portfolio",
+        "url": "https://images.iimg.live/images/vibrant-portfolio-7749.webp",
+        "shop": true,
+        "card": false,
+        "like": false
+    },
+    {
+        "id": 15,
+        "number": "16",
+        "title": "Cool Photography",
+        "url": "https://images.iimg.live/images/cool-photography-6128.webp",
+        "shop": true,
+        "card": false,
+        "like": false
+    },
+    {
+        "id": 16,
+        "number": "17",
+        "title": "Glorious Image",
+        "url": "https://images.iimg.live/images/glorious-image-6771.webp",
+        "shop": true,
+        "card": false,
+        "like": false
+    },
+    {
+        "id": 17,
+        "number": "18",
+        "title": "Stellar Art",
+        "url": "https://images.iimg.live/images/stellar-art-6894.webp",
+        "shop": true,
+        "card": false,
+        "like": false
+    },
+    {
+        "id": 18,
+        "number": "19",
+        "title": "Supreme Image",
+        "url": "https://images.iimg.live/images/supreme-image-2667.webp",
+        "shop": true,
+        "card": false,
+        "like": false
+    },
+    {
+        "id": 19,
+        "number": "20",
+        "title": "Fantastic Moment",
+        "url": "https://images.iimg.live/images/fantastic-moment-2715.webp",
+        "shop": true,
+        "card": false,
+        "like": false
+    },
+    {
+        "id": 20,
+        "number": "21",
+        "title": "Stellar Photography",
+        "url": "https://images.iimg.live/images/stellar-photography-4739.webp",
+        "shop": true,
+        "card": false,
+        "like": false
+    },
+    {
+        "id": 21,
+        "number": "22",
+        "title": "Vibrant Scene",
+        "url": "https://images.iimg.live/images/vibrant-scene-3736.webp",
+        "shop": true,
+        "card": false,
+        "like": false
+    },
+    {
+        "id": 22,
+        "number": "23",
+        "title": "Stellar Vision",
+        "url": "https://images.iimg.live/images/stellar-vision-3633.webp",
+        "shop": true,
+        "card": false,
+        "like": false
+    },
+    {
+        "id": 23,
+        "number": "25",
+        "title": "Perfect Collection",
+        "url": "https://images.iimg.live/images/perfect-collection-8393.webp",
+        "shop": true,
+        "card": false,
+        "like": false
+    },
+    {
+        "id": 24,
+        "number": "24",
+        "title": "Perfect Memory",
+        "url": "https://images.iimg.live/images/perfect-memory-1371.webp",
+        "shop": true,
+        "card": false,
+        "like": false
+    },
+    {
+        "id": 25,
+        "number": "26",
+        "title": "Glorious Moment",
+        "url": "https://images.iimg.live/images/glorious-moment-7164.webp",
+        "shop": true,
+        "card": false,
+        "like": false
+    },
+    {
+        "id": 26,
+        "number": "27",
+        "title": "Ultimate Gallery",
+        "url": "https://images.iimg.live/images/ultimate-gallery-9639.webp",
+        "shop": true,
+        "card": false,
+        "like": false
+    },
+    {
+        "id": 27,
+        "number": "28",
+        "title": "Cool Photography",
+        "url": "https://images.iimg.live/images/cool-photography-7382.webp",
+        "shop": true,
+        "card": false,
+        "like": false
+    },
+    {
+        "id": 28,
+        "number": "29",
+        "title": "Awesome Art",
+        "url": "https://images.iimg.live/images/awesome-art-3684.webp",
+        "shop": true,
+        "card": false,
+        "like": false
+    }
+]

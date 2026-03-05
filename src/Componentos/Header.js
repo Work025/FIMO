@@ -217,6 +217,7 @@ function Header() {
                     <li><NavLink to="/" onClick={closeMenu}>{t('home')}</NavLink></li>
                     <li><NavLink to="/blog" onClick={closeMenu}>{t('blog')}</NavLink></li>
                     <li><NavLink to="/shop" onClick={closeMenu}>{t('shop')}</NavLink></li>
+                    <li><NavLink to="/buy" onClick={closeMenu}>{t('orders') || 'Orders'}</NavLink></li>
                     <li><NavLink to="/make" onClick={closeMenu}>{t('customize')}</NavLink></li>
                     <li><NavLink to="/card" onClick={closeMenu}>{t('features')}</NavLink></li>
                 </ul>

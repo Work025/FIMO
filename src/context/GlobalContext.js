@@ -22,6 +22,14 @@ export const GlobalProvider = ({ children }) => {
         }
     });
 
+    const [boughtItems, setBoughtItems] = useState(() => {
+        try {
+            return JSON.parse(localStorage.getItem('boughtItems')) || [];
+        } catch {
+            return [];
+        }
+    });
+
     useEffect(() => {
         localStorage.setItem('fimo_language', language);
     }, [language]);
@@ -33,6 +41,10 @@ export const GlobalProvider = ({ children }) => {
     useEffect(() => {
         localStorage.setItem('fimo_wishlist', JSON.stringify(likedItems));
     }, [likedItems]);
+
+    useEffect(() => {
+        localStorage.setItem('boughtItems', JSON.stringify(boughtItems));
+    }, [boughtItems]);
 
     const translations = {
         EN: {
@@ -244,6 +256,20 @@ export const GlobalProvider = ({ children }) => {
         });
     };
 
+    const toggleBuy = (product) => {
+        setBoughtItems(prev => {
+            const isBought = prev.find(item => item.id === product.id);
+            if (isBought) {
+                return prev.filter(item => item.id !== product.id);
+            }
+            return [...prev, product];
+        });
+    };
+
+    const clearBought = () => {
+        setBoughtItems([]);
+    };
+
     const value = {
         language,
         languages,
@@ -255,6 +281,9 @@ export const GlobalProvider = ({ children }) => {
         removeFromCart,
         likedItems,
         toggleLike,
+        boughtItems,
+        toggleBuy,
+        clearBought,
         t
     };
 
