@@ -164,6 +164,7 @@
     }
 
     .aside-bg-text {
+        top: 250px;
         font-size: 20vw;
     }
 }
