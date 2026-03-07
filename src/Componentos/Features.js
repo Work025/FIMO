@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import '../Styles/Features.css';
 import { useGlobalContext } from '../context/GlobalContext';
 import featuresData from '../Data/SHoise.json';
 
 const Features = () => {
-    const [features, setFeatures] = useState(featuresData);
+    const [features] = useState(featuresData);
     const { t, addToCart, toggleLike, likedItems, toggleBuy, boughtItems } = useGlobalContext();
 
     return (

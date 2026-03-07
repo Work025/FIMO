@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../context/GlobalContext";
 import heroBg from "../Assets/herobg.avif";
 import tshirt1 from "../Assets/Fimo-fudbolka1.png";
@@ -12,7 +11,6 @@ import "../Styles/Hero.css";
 
 function Hero() {
     const { addToCart, toggleLike, likedItems, t } = useGlobalContext();
-    const navigate = useNavigate();
 
 
     const imgRef = useRef(null);

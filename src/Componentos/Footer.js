@@ -15,8 +15,8 @@ function Footer() {
                         <p className="footer-tagline">{t('footer_text')}</p>
                         <div className="social-links">
                             <a href="t.me/Fimo_shop_bot" className="social-icon">BOT</a>
-                            <a href="#" className="social-icon">FB</a>
-                            <a href="#" className="social-icon">TW</a>
+                            <a href="#!" className="social-icon">FB</a>
+                            <a href="#!" className="social-icon">TW</a>
                         </div>
                     </div>
 
@@ -47,8 +47,8 @@ function Footer() {
                 <div className="footer-bottom">
                     <p>&copy; {new Date().getFullYear()} FIMO. All rights reserved.</p>
                     <div className="footer-legal">
-                        <a href="#">Privacy Policy</a>
-                        <a href="#">Terms of Service</a>
+                        <a href="#!">Privacy Policy</a>
+                        <a href="#!">Terms of Service</a>
                     </div>
                 </div>
             </div>

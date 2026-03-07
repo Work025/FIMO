@@ -70,7 +70,6 @@ export const GlobalProvider = ({ children }) => {
             eco_dye: "Eco-Friendly Dye",
             eco_dye_desc: "Colors that stay vibrant wash after wash without harsh chemicals.",
             perfect_fit: "Perfect Fit",
-            perfect_fit: "Perfect Fit",
             perfect_fit_desc: "Designed to provide maximum comfort and a stylish look for any occasion.",
             redefining_quality: "Redefining Quality.",
             premium_desc: "Premium sustainable fabrics designed for exactly who you are.",
