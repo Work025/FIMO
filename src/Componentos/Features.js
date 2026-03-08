@@ -22,7 +22,12 @@ const Features = () => {
                     {features.map((item, index) => (
                         <div className="feature-card fade-up" key={item.id} style={{ animationDelay: `${index * 0.1}s` }}>
                             <div className="feature-img-container">
-                                <img src={item.url} alt={item.title} className="feature-img" />
+                                <img
+                                    src={item.url || item.img}
+                                    alt={item.title}
+                                    className="feature-img"
+                                    onError={(e) => { e.target.src = "https://via.placeholder.com/400x500?text=FIMO+Collection"; }}
+                                />
                                 <div className="feature-overlay">
                                     <div className="feature-badge">#{item.number}</div>
                                     <button
