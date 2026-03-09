@@ -17,10 +17,8 @@ function Header() {
         toggleLike,
         t
     } = useGlobalContext();
-    
+
     const [features] = useState(featuresData);
-    const [filterPrice, setFilterPrice] = useState(""); // "low" yoki "high"
-    const [filterCategory, setFilterCategory] = useState(""); // "T-Shirts", "Pants", "Limited"
     const [menuOpen, setMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const [activePanel, setActivePanel] = useState(null); // 'search', 'lang', 'cart', 'like'
