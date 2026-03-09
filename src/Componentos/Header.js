@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { useGlobalContext } from "../context/GlobalContext";
+import featuresData from "../Data/SHoise.json"; // Features JSON
 import "../Styles/Header.css";
 
 function Header() {
@@ -16,7 +17,10 @@ function Header() {
         toggleLike,
         t
     } = useGlobalContext();
-
+    
+    const [features] = useState(featuresData);
+    const [filterPrice, setFilterPrice] = useState(""); // "low" yoki "high"
+    const [filterCategory, setFilterCategory] = useState(""); // "T-Shirts", "Pants", "Limited"
     const [menuOpen, setMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const [activePanel, setActivePanel] = useState(null); // 'search', 'lang', 'cart', 'like'
@@ -43,8 +47,6 @@ function Header() {
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
-
-
 
     return (
         <header className={`header ${isScrolled ? "scrolled" : ""}`}>
@@ -104,32 +106,41 @@ function Header() {
             {/* SEARCH PANEL */}
             <div className={`panel search-panel ${activePanel === 'search' ? 'open' : ''}`}>
                 <div className="panel-container">
+                    {/* Search Input */}
                     <div className="search-bar">
                         <input
                             type="text"
-                            placeholder={t('search_placeholder')}
+                            placeholder={t('search_placeholder') || "Search..."}
                             autoFocus
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                         />
-                        <button className="search-submit">{t('search')}</button>
                     </div>
-                    <div className="search-filters">
-                        <div className="filter-group">
-                            <label>Price Range</label>
-                            <div className="filter-options">
-                                <span className="filter-chip">Low to High</span>
-                                <span className="filter-chip">High to Low</span>
-                            </div>
-                        </div>
-                        <div className="filter-group">
-                            <label>Category</label>
-                            <div className="filter-options">
-                                <span className="filter-chip">T-Shirts</span>
-                                <span className="filter-chip">Pants</span>
-                                <span className="filter-chip">Limited</span>
-                            </div>
-                        </div>
+
+                    {/* Cards from JSON */}
+                    <div className="search-cards">
+                        {features
+                            .filter(item => item.title.toLowerCase().includes(searchQuery.toLowerCase()))
+                            .map(item => (
+                                <div key={item.id} className="search-card">
+                                    <div className="search-card-img">
+                                        <img
+                                            src={item.url}
+                                            alt={item.title}
+                                            onError={(e) => { e.target.src = "https://via.placeholder.com/100x120?text=FIMO"; }}
+                                        />
+                                    </div>
+                                    <div className="search-card-info">
+                                        <h4>{item.title}</h4>
+                                        <p className="price">${item.price}</p>
+                                        <p className="category">{item.category}</p>
+                                    </div>
+                                </div>
+                            ))
+                        }
+                        {searchQuery && features.filter(item => item.title.toLowerCase().includes(searchQuery.toLowerCase())).length === 0 && (
+                            <p className="no-results">No matching items</p>
+                        )}
                     </div>
                 </div>
             </div>

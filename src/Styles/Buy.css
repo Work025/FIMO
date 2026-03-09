@@ -1,51 +1,50 @@
+/* ===============================
+BUY SCROLLER SECTION
+=============================== */
+
 .buy-scroller-section {
-    padding: 2rem 0;
-    background: transparent;
+    padding: 2rem 4.8rem;
+    background: #121212;
+    color: #eee;
     margin-top: 2rem;
-    position: relative;
-    z-index: 10;
 }
 
 .buy-scroller-header {
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
-    padding: 0 2rem;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
     margin-bottom: 2rem;
 }
 
-.buy-scroller-info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
 .buy-scroller-title {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     font-weight: 700;
     letter-spacing: -0.5px;
     text-transform: uppercase;
 }
 
+.highlight-text {
+    color: #4facfe;
+}
+
 .buy-count-badge {
-    font-size: 0.8rem;
-    color: #888;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 2px 10px;
+    font-size: .8rem;
+    background: rgba(255, 255, 255, .05);
+    padding: 4px 10px;
     border-radius: 20px;
-    width: fit-content;
+    color: #aaa;
 }
 
 .buy-clear-btn {
     background: transparent;
-    border: 1px solid #333;
-    color: #888;
-    padding: 0.5rem 1.2rem;
-    border-radius: 50px;
-    font-size: 0.8rem;
-    font-weight: 600;
+    border: 1px solid #444;
+    color: #aaa;
+    padding: .45rem 1.3rem;
+    border-radius: 40px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: .3s;
 }
 
 .buy-clear-btn:hover {
@@ -53,67 +52,80 @@
     color: #ff3b30;
 }
 
+
+/* ===============================
+HORIZONTAL GRID
+=============================== */
+
 .buy-horizontal-grid {
     display: flex;
-    overflow-x: auto;
     gap: 1.5rem;
-    padding: 0.5rem 2rem 2rem;
-    scrollbar-width: none;
-    /* Firefox */
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding-bottom: 1rem;
 }
 
 .buy-horizontal-grid::-webkit-scrollbar {
     display: none;
-    /* Chrome/Safari */
 }
 
+
+/* ===============================
+PRODUCT CARD
+=============================== */
+
 .buy-mini-card {
-    min-width: 180px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    min-width: 170px;
+    background: #1e1e1e;
     border-radius: 16px;
     padding: 10px;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: .3s;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, .4);
 }
 
 .buy-mini-card:hover {
-    background: rgba(255, 255, 255, 0.08);
-    transform: translateY(-5px);
-    border-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-6px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, .6);
 }
 
 .mini-card-img-wrap {
     position: relative;
     aspect-ratio: 1;
-    border-radius: 12px;
     overflow: hidden;
-    margin-bottom: 12px;
+    border-radius: 12px;
+    margin-bottom: 10px;
 }
 
 .mini-card-img-wrap img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: .3s;
 }
+
+.buy-mini-card:hover img {
+    transform: scale(1.08);
+}
+
+
+/* REMOVE BUTTON */
 
 .mini-remove-btn {
     position: absolute;
-    top: 5px;
-    right: 5px;
-    width: 24px;
-    height: 24px;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(5px);
-    border: none;
+    top: 6px;
+    right: 6px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
-    color: #fff;
+    border: none;
+    background: rgba(0, 0, 0, .65);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
+    color: #fff;
     cursor: pointer;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: .25s;
 }
 
 .buy-mini-card:hover .mini-remove-btn {
@@ -124,103 +136,282 @@
     background: #ff3b30;
 }
 
+
+/* TEXT */
+
 .mini-card-details h4 {
-    font-size: 0.9rem;
+    font-size: .9rem;
     font-weight: 600;
-    margin-bottom: 4px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .mini-card-details p {
-    font-size: 0.75rem;
-    color: #555;
+    font-size: .75rem;
+    color: #aaa;
 }
 
+
+/* ===============================
+CHECKOUT CARD
+=============================== */
+
 .buy-checkout-card {
-    min-width: 180px;
-    background: #fff;
+    min-width: 170px;
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
     border-radius: 16px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 1.5rem;
-    color: #000;
+    gap: 1rem;
     padding: 20px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: .3s;
+    color: #fff;
 }
 
 .buy-checkout-card:hover {
-    background: #4facfe;
-    color: #fff;
-    transform: scale(1.02);
+    transform: scale(1.05);
 }
 
 .mini-checkout-btn {
     background: transparent;
-    border: 1px solid currentColor;
-    color: inherit;
-    padding: 0.6rem 1.5rem;
-    border-radius: 50px;
+    border: 1px solid #fff;
+    color: #fff;
+    padding: .45rem 1.2rem;
+    border-radius: 30px;
+    font-size: .75rem;
     font-weight: 700;
-    font-size: 0.8rem;
-    text-transform: uppercase;
     cursor: pointer;
 }
 
-.buy-scroller-divider {
-    height: 1px;
-    background: linear-gradient(90deg, transparent, #1a1a1a, transparent);
-    margin-top: 1rem;
+
+/* ===============================
+CHECKOUT MODAL
+=============================== */
+
+.checkout-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
 }
 
-@media (max-width: 768px) {
-    .buy-scroller-header {
-        padding: 0 1.5rem;
-        margin-bottom: 1.5rem;
+.checkout-box {
+    background: #1e1e1e;
+    padding: 30px;
+    border-radius: 18px;
+    width: 420px;
+    max-width: 95%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    color: #fff;
+    animation: fadeUp .3s ease;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
     }
 
-    .buy-scroller-info {
-        gap: 0.2rem;
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
+}
 
-    .buy-scroller-title {
-        font-size: 1.2rem;
-    }
 
-    .buy-horizontal-grid {
-        padding: 0.5rem 1.5rem 1.5rem;
-        gap: 1rem;
+/* ===============================
+PRODUCT LIST
+=============================== */
+
+.checkout-products {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 150px;
+    overflow: auto;
+}
+
+.checkout-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: .9rem;
+}
+
+.checkout-item img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+
+/* ===============================
+FORM INPUTS
+=============================== */
+
+.checkout-box input,
+.checkout-box select {
+    background: #121212;
+    border: 1px solid #333;
+    padding: 10px;
+    border-radius: 8px;
+    color: #fff;
+    outline: none;
+}
+
+.checkout-box input:focus {
+    border-color: #4facfe;
+}
+
+
+/* ===============================
+PAYMENT METHODS
+=============================== */
+
+.payment-methods {
+    display: flex;
+    gap: 20px;
+    font-size: .9rem;
+}
+
+.payment-methods label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+
+/* ===============================
+CARD PAYMENT
+=============================== */
+
+.card-payment {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.card-row {
+    display: flex;
+    gap: 10px;
+}
+
+
+/* ===============================
+PROMO CODE
+=============================== */
+
+.promo-box {
+    display: flex;
+    gap: 10px;
+}
+
+.promo-box input {
+    flex: 1;
+}
+
+.promo-box button {
+    padding: 10px 16px;
+    border: none;
+    background: #4facfe;
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.promo-box button:hover {
+    background: #2f80ed;
+}
+
+
+/* ===============================
+ORDER SUMMARY
+=============================== */
+
+.order-summary {
+    background: #121212;
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: .9rem;
+}
+
+.order-summary h3 {
+    margin-top: 5px;
+    color: #4facfe;
+}
+
+
+/* ===============================
+CHECKOUT ACTIONS
+=============================== */
+
+.checkout-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.checkout-actions button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.checkout-actions button:first-child {
+    background: #333;
+    color: #aaa;
+}
+
+.checkout-actions button:last-child {
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    color: #fff;
+}
+
+
+/* ===============================
+MOBILE
+=============================== */
+
+@media(max-width:768px) {
+
+    .buy-scroller-section {
+        padding: 1.5rem;
     }
 
     .buy-mini-card {
         min-width: 140px;
-        padding: 8px;
     }
 
     .buy-checkout-card {
         min-width: 140px;
-        padding: 15px;
-        gap: 1rem;
     }
 
     .mini-remove-btn {
         opacity: 1;
-        /* Always visible on mobile */
-        width: 28px;
-        height: 28px;
-        font-size: 20px;
     }
 
-    .mini-card-details h4 {
-        font-size: 0.8rem;
+    .checkout-box {
+        padding: 20px;
     }
 
-    .mini-checkout-btn {
-        padding: 0.5rem 1rem;
-        font-size: 0.7rem;
-    }
 }

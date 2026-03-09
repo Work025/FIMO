@@ -262,6 +262,52 @@
     background: rgba(255, 255, 255, 0.05);
 }
 
+.search-cards {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-top: 10px;
+}
+
+.search-card {
+    display: flex;
+    gap: 10px;
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.search-card-info h4 {
+    color: #eee;
+    /* default rang */
+}
+
+/* Card hover bo‘lganda butun card va h4 rang o‘zgaradi */
+.search-card:hover {
+    background: #f5f5f5;
+}
+
+.search-card:hover .search-card-info h4 {
+    color: #050505;
+}
+
+.search-card-img img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+}
+
+.search-card-info h4 {
+    margin: 0;
+    font-size: 14px;
+}
+
+.search-card-info .price,
+.search-card-info .category {
+    font-size: 12px;
+    color: #888;
+}
+
 /* LANG GRID */
 .lang-grid {
     display: grid;

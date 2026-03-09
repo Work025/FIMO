@@ -9,15 +9,6 @@
         "like": false
     },
     {
-        "id": 2,
-        "number": "2",
-        "title": "Brilliant Photo",
-        "url": "https://images.iimg.live/images/brilliant-photo-5234.webp",
-        "shop": true,
-        "card": false,
-        "like": false
-    },
-    {
         "id": 3,
         "number": "3",
         "title": "Fantastic Art",

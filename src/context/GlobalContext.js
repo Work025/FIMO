@@ -7,6 +7,8 @@ export const useGlobalContext = () => useContext(GlobalContext);
 export const GlobalProvider = ({ children }) => {
     const [language, setLanguage] = useState(() => localStorage.getItem('fimo_language') || 'EN');
     const [searchQuery, setSearchQuery] = useState('');
+    const [filterPrice, setFilterPrice] = useState(""); // "low" yoki "high"
+    const [filterCategory, setFilterCategory] = useState(""); // "T-Shirts", "Pants", "Limited"
     const [cartItems, setCartItems] = useState(() => {
         try {
             return JSON.parse(localStorage.getItem('fimo_cart')) || [];

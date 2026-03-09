@@ -5,7 +5,34 @@ import featuresData from '../Data/SHoise.json';
 
 const Features = () => {
     const [features] = useState(featuresData);
-    const { t, addToCart, toggleLike, likedItems, toggleBuy, boughtItems } = useGlobalContext();
+    const {
+        t,
+        addToCart,
+        toggleLike,
+        likedItems,
+        toggleBuy,
+        boughtItems,
+        searchQuery,
+        filterPrice,
+        filterCategory
+    } = useGlobalContext();
+
+    // Filter qilish
+    let filteredFeatures = features.filter((item) =>
+        item.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    // Category filter
+    if (filterCategory) {
+        filteredFeatures = filteredFeatures.filter(item => item.category === filterCategory);
+    }
+
+    // Price filter
+    if (filterPrice) {
+        filteredFeatures = filteredFeatures.sort((a, b) =>
+            filterPrice === "low" ? a.price - b.price : b.price - a.price
+        );
+    }
 
     return (
         <section id="features" className="features-section">
@@ -19,7 +46,7 @@ const Features = () => {
                     </p>
                 </div>
                 <div className="features-grid">
-                    {features.map((item, index) => (
+                    {filteredFeatures.map((item, index) => (
                         <div className="feature-card fade-up" key={item.id} style={{ animationDelay: `${index * 0.1}s` }}>
                             <div className="feature-img-container">
                                 <img
