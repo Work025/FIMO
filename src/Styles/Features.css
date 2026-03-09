@@ -126,7 +126,7 @@
 .feature-badge {
     background: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(10px);
-    color: #fff;
+    color: #888;
     padding: 0.4rem 1rem;
     font-weight: 700;
     font-size: 0.8rem;
