@@ -2,4 +2,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://fimo-style.vercel.app/sitemap.xml
+Sitemap: https://fimo-coral.vercel.app/sitemap.xml
