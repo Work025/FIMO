@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import '../Styles/Features.css';
 import { useGlobalContext } from '../context/GlobalContext';
 import featuresData from '../Data/SHoise.json';
@@ -18,7 +18,7 @@ const Features = () => {
     } = useGlobalContext();
 
     // Filter qilish
-    let filteredFeatures = features.filter((item) =>
+    features.filter((item) =>
         item.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
 

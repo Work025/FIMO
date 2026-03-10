@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import usersbg from "../Assets/UsersBG.avif";
 import user1 from "../Assets/User1.png";
 import user2 from "../Assets/User2.png";
 import user3 from "../Assets/User3.png";
