@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { useGlobalContext } from "../context/GlobalContext";
 import featuresData from "../Data/SHoise.json"; // Features JSON
+import { useGoogleLogin } from '@react-oauth/google';
+import axios from 'axios';
 import "../Styles/Header.css";
 
 function Header() {
@@ -15,13 +17,16 @@ function Header() {
         removeFromCart,
         likedItems,
         toggleLike,
+        user,
+        loginUser,
+        logoutUser,
         t
     } = useGlobalContext();
 
     const [features] = useState(featuresData);
     const [menuOpen, setMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
-    const [activePanel, setActivePanel] = useState(null); // 'search', 'lang', 'cart', 'like'
+    const [activePanel, setActivePanel] = useState(null); // 'search', 'lang', 'cart', 'like', 'profile'
 
     const toggleMenu = () => setMenuOpen(!menuOpen);
     const closeMenu = () => {
@@ -37,6 +42,19 @@ function Header() {
             setMenuOpen(false);
         }
     };
+
+    const googleLogin = useGoogleLogin({
+        onSuccess: async (tokenResponse) => {
+            try {
+                const res = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
+                    headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
+                });
+                loginUser(res.data);
+            } catch (err) {
+                console.error("Google Login Error:", err);
+            }
+        },
+    });
 
     useEffect(() => {
         const handleScroll = () => {
@@ -88,6 +106,15 @@ function Header() {
                     <button className={`tool-btn cart-btn ${activePanel === 'cart' ? 'active' : ''}`} onClick={() => togglePanel('cart')}>
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
                         {cartItems.length > 0 && <span className="badge">{cartItems.length}</span>}
+                    </button>
+
+                    {/* PROFILE */}
+                    <button className={`tool-btn profile-btn ${activePanel === 'profile' ? 'active' : ''}`} onClick={() => togglePanel('profile')}>
+                        {user ? (
+                            <img src={user.picture} alt="Profile" className="user-avatar-mini" />
+                        ) : (
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        )}
                     </button>
 
                     {/* MOBILE MENU TOGGLE */}
@@ -155,65 +182,105 @@ function Header() {
                 </div>
             </div>
 
-            {/* LIKE/CART SIDE PANEL */}
-            <div className={`panel side-panel ${activePanel === 'cart' || activePanel === 'like' ? 'open' : ''}`}>
+            {/* LIKE/CART/PROFILE SIDE PANEL */}
+            <div className={`panel side-panel ${['cart', 'like', 'profile'].includes(activePanel) ? 'open' : ''}`}>
                 <div className="panel-container">
                     <div className="panel-header">
-                        <h3>{activePanel === 'cart' ? t('cart') : t('wishlist')}</h3>
+                        <h3>{activePanel === 'profile' ? t('profile') : (activePanel === 'cart' ? t('cart') : t('wishlist'))}</h3>
                         <button className="close-panel" onClick={() => setActivePanel(null)}>&times;</button>
                     </div>
 
                     <div className="panel-content">
-                        {activePanel === 'cart' ? (
-                            cartItems.length > 0 ? (
-                                <div className="panel-items">
-                                    {cartItems.map((item) => (
-                                        <div key={item.cartId} className="side-item">
-                                            <div className="side-item-img">
-                                                <img src={item.img} alt={item.title} />
+                        {activePanel === 'profile' ? (
+                            <div className="profile-content">
+                                {user ? (
+                                    <div className="user-profile">
+                                        <div className="profile-main-info">
+                                            <img src={user.picture} alt={user.name} className="profile-large-img" />
+                                            <h3>{t('welcome')}, {user.given_name}!</h3>
+                                            <p>{user.email}</p>
+                                        </div>
+
+                                        <div className="profile-sections">
+                                            <div className="profile-section">
+                                                <h4>{t('orders')}</h4>
+                                                <NavLink to="/buy" className="profile-link" onClick={() => setActivePanel(null)}>{t('view_collection')}</NavLink>
                                             </div>
-                                            <div className="side-item-info">
-                                                <h4>{item.title}</h4>
-                                                <p className="price">${item.price}</p>
-                                                <button className="remove-item" onClick={() => removeFromCart(item.cartId)}>{t('remove')}</button>
+                                            <div className="profile-section">
+                                                <h4>{t('wishlist')} ({likedItems.length})</h4>
+                                                <button className="profile-link" onClick={() => togglePanel('like')}>{t('view_collection')}</button>
                                             </div>
                                         </div>
-                                    ))}
-                                    <div className="panel-footer">
-                                        <div className="total-box">
-                                            <span>TOTAL:</span>
-                                            <span>${cartItems.reduce((acc, item) => acc + item.price, 0).toFixed(2)}</span>
-                                        </div>
-                                        <button className="checkout-btn">{t('buy_now')}</button>
+
+                                        <button className="logout-btn" onClick={() => { logoutUser(); setActivePanel(null); }}>
+                                            {t('logout')}
+                                        </button>
                                     </div>
-                                </div>
-                            ) : (
-                                <div className="empty-state">
-                                    <p>{t('empty_state')}</p>
-                                    <button className="panel-action-btn" onClick={() => setActivePanel(null)}>{t('continue_shopping')}</button>
-                                </div>
-                            )
-                        ) : (
-                            likedItems.length > 0 ? (
-                                <div className="panel-items">
-                                    {likedItems.map((item) => (
-                                        <div key={item.id} className="side-item">
-                                            <div className="side-item-img">
-                                                <img src={item.img} alt={item.title} />
-                                            </div>
-                                            <div className="side-item-info">
-                                                <h4>{item.title}</h4>
-                                                <p className="price">${item.price}</p>
-                                                <button className="remove-item" onClick={() => toggleLike(item)}>{t('remove')}</button>
-                                            </div>
+                                ) : (
+                                    <div className="auth-prompt">
+                                        <div className="auth-icon-large">
+                                            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                                         </div>
-                                    ))}
-                                </div>
+                                        <p>{t('empty_state')}</p>
+                                        <button className="google-login-btn" onClick={() => googleLogin()}>
+                                            <svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" /><path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" /><path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" /><path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" /></svg>
+                                            {t('login')}
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        ) : (
+                            activePanel === 'cart' ? (
+                                cartItems.length > 0 ? (
+                                    <div className="panel-items">
+                                        {cartItems.map((item) => (
+                                            <div key={item.cartId} className="side-item">
+                                                <div className="side-item-img">
+                                                    <img src={item.img} alt={item.title} onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=300&auto=format&fit=crop"; }} />
+                                                </div>
+                                                <div className="side-item-info">
+                                                    <h4>{item.title}</h4>
+                                                    <p className="price">${item.price}</p>
+                                                    <button className="remove-item" onClick={() => removeFromCart(item.cartId)}>{t('remove')}</button>
+                                                </div>
+                                            </div>
+                                        ))}
+                                        <div className="panel-footer">
+                                            <div className="total-box">
+                                                <span>TOTAL:</span>
+                                                <span>${cartItems.reduce((acc, item) => acc + item.price, 0).toFixed(2)}</span>
+                                            </div>
+                                            <button className="checkout-btn">{t('buy_now')}</button>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="empty-state">
+                                        <p>{t('empty_state')}</p>
+                                        <button className="panel-action-btn" onClick={() => setActivePanel(null)}>{t('continue_shopping')}</button>
+                                    </div>
+                                )
                             ) : (
-                                <div className="empty-state">
-                                    <p>{t('empty_state')}</p>
-                                    <button className="panel-action-btn" onClick={() => setActivePanel(null)}>{t('continue_shopping')}</button>
-                                </div>
+                                likedItems.length > 0 ? (
+                                    <div className="panel-items">
+                                        {likedItems.map((item) => (
+                                            <div key={item.id} className="side-item">
+                                                <div className="side-item-img">
+                                                    <img src={item.img} alt={item.title} onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=300&auto=format&fit=crop"; }} />
+                                                </div>
+                                                <div className="side-item-info">
+                                                    <h4>{item.title}</h4>
+                                                    <p className="price">${item.price}</p>
+                                                    <button className="remove-item" onClick={() => toggleLike(item)}>{t('remove')}</button>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <div className="empty-state">
+                                        <p>{t('empty_state')}</p>
+                                        <button className="panel-action-btn" onClick={() => setActivePanel(null)}>{t('continue_shopping')}</button>
+                                    </div>
+                                )
                             )
                         )}
                     </div>

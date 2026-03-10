@@ -3,37 +3,47 @@ import { useGlobalContext } from "../context/GlobalContext";
 import "../Styles/Buy.css";
 
 const Buy = () => {
-    const { t, boughtItems, toggleBuy, clearBought } = useGlobalContext();
+    const { t, boughtItems, toggleBuy, clearBought, user } = useGlobalContext();
     const [checkoutOpen, setCheckoutOpen] = useState(false);
+    const [orderSuccess, setOrderSuccess] = useState(false);
     const [form, setForm] = useState({
-        name: "",
+        name: user?.name || "",
         phone: "",
-        address: "",
-        payment: "cash"
+        makhalla: "",
+        house: "",
+        apartment: "",
+        distance: 2, // Default distance in km
+        payment: "account",
+        comment: ""
     });
 
     const [promo, setPromo] = useState("");
     const [discount, setDiscount] = useState(0);
 
     /* PRICE CALCULATION */
-    const prices = boughtItems.map(() => 120);
-    const total = prices.reduce((a, b) => a + b, 0);
-    const finalPrice = total - discount;
+    const basePrices = boughtItems.map(item => item.price || 120);
+    const total = basePrices.reduce((a, b) => a + b, 0);
+
+    // Multi-buy discount
+    const multiDiscountRate = boughtItems.length > 3 ? 0.15 : (boughtItems.length === 3 ? 0.10 : 0);
+    const multiDiscount = total * multiDiscountRate;
+
+    // Promo discount
+    const promoDiscount = discount;
+
+    const deliveryFee = form.distance > 3 ? 15 : 0;
+    const finalPrice = total - multiDiscount - promoDiscount + deliveryFee;
 
     /* PROMO CODE */
     const applyPromo = () => {
-
-        if (promo === "AKMALZOR") {
+        const upPromo = promo.trim().toUpperCase();
+        if (upPromo === "AKMALZOR") {
             setDiscount(total * 0.20);
-            alert("20% discount applied");
-        }
-
-        else if (promo === "F1M0") {
+            alert("20% discount applied!");
+        } else if (upPromo === "F1M0") {
             setDiscount(50);
-            alert("50$ discount applied");
-        }
-
-        else {
+            alert("$50 discount applied!");
+        } else {
             alert("Invalid promo code");
         }
     };
@@ -45,20 +55,23 @@ const Buy = () => {
 
     /* CONFIRM ORDER */
     const confirmOrder = () => {
-        if (!form.name || !form.phone || !form.address) {
-            alert("Please fill all fields");
+        if (!form.name || !form.phone || !form.makhalla) {
+            alert("Please fill necessary delivery fields");
             return;
         }
 
-        if (form.payment === "card") {
-            alert("Card payment successful!");
+        if (form.payment === "account" && !user) {
+            alert("Please login to pay with your account!");
+            return;
         }
 
-        if (form.payment === "cash") {
-            alert("Order created! Pay at pickup point.");
-        }
-        clearBought();
-        setCheckoutOpen(false);
+        setOrderSuccess(true);
+        setTimeout(() => {
+            clearBought();
+            setCheckoutOpen(false);
+            setOrderSuccess(false);
+            alert("Order Confirmed! Your package will arrive in approx. 45-60 minutes.");
+        }, 2000);
     };
 
     if (boughtItems.length === 0) return null;
@@ -115,6 +128,45 @@ const Buy = () => {
                         </button>
                     </div>
                 </div>
+
+                <div className="buy-summary-bar fade-up">
+                    <div className="summary-item">
+                        <span>Items: {boughtItems.length}</span>
+                    </div>
+                    {multiDiscount > 0 && (
+                        <div className="summary-item discount">
+                            <span>Discount: -${multiDiscount.toFixed(2)}</span>
+                        </div>
+                    )}
+                    <div className="summary-item final">
+                        <span>Total: ${(total - multiDiscount).toFixed(2)}</span>
+                    </div>
+                </div>
+            </section>
+
+            {/* Brand Info & Map in Checkout Page */}
+            <section className="buy-brand-section">
+                <div className="buy-brand-content fade-up">
+                    <div className="buy-brand-text">
+                        <span className="mini-badge">OUR STORY</span>
+                        <h3>FIMO - Your brand, your style.</h3>
+                        <p>{t('main_desc')}</p>
+                    </div>
+                    <div className="buy-brand-map">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11984.747197022!2d69.240562!3d41.311081!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38ae8b0cc379e9c3%3A0xa5a99769216563ef!2sTashkent%2C%20Uzbekistan!5e0!3m2!1sen!2s!4v1700000000000!5m2!1sen!2s"
+                            width="100%"
+                            height="250"
+                            style={{ border: 0, borderRadius: '20px' }}
+                            allowFullScreen=""
+                            loading="lazy"
+                            title="FIMO Pickup Point"
+                        ></iframe>
+                        <div className="map-overlay-text">
+                            <span>Pickup Point: Tashkent City Centre</span>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             {/* CHECKOUT MODAL */}
@@ -124,78 +176,137 @@ const Buy = () => {
                         <h3>Checkout</h3>
                         {/* PRODUCTS */}
 
-                        <div className="checkout-products">
-                            {boughtItems.map(item => (
-                                <div key={item.id} className="checkout-item">
-                                    <img src={item.url || item.img} alt={item.title} />
-                                    <span>{item.title}</span>
+                        <div className="checkout-products-list">
+                            {boughtItems.map((item, idx) => (
+                                <div key={idx} className="checkout-item-row fade-up">
+                                    <div className="item-row-img">
+                                        <img src={item.url || item.img} alt={item.title} onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=300&auto=format&fit=crop" }} />
+                                    </div>
+                                    <div className="item-row-info">
+                                        <h4>{item.title}</h4>
+                                        <p>{item.category || "Original Style"}</p>
+                                    </div>
+                                    <div className="item-row-price">
+                                        <span>${(item.price || 120).toFixed(2)}</span>
+                                    </div>
                                 </div>
                             ))}
                         </div>
 
-                        {/* USER INFO */}
+                        <div className="checkout-form-grid">
+                            <div className="form-group-full">
+                                <label>Recipient Name</label>
+                                <input
+                                    type="text"
+                                    placeholder="Full Name"
+                                    name="name"
+                                    value={form.name}
+                                    onChange={handleChange}
+                                />
+                            </div>
 
-                        <input
-                            type="text"
-                            placeholder="Full Name"
-                            name="name"
-                            value={form.name}
-                            onChange={handleChange}
-                        />
+                            <div className="form-group">
+                                <label>Phone Number</label>
+                                <input
+                                    type="tel"
+                                    placeholder="+998 -- --- ----"
+                                    name="phone"
+                                    value={form.phone}
+                                    onChange={handleChange}
+                                />
+                            </div>
 
-                        <input
-                            type="tel"
-                            placeholder="Phone"
-                            name="phone"
-                            value={form.phone}
-                            onChange={handleChange}
-                        />
+                            <div className="form-group">
+                                <label>Makhalla / Area</label>
+                                <input
+                                    type="text"
+                                    placeholder="Enter makhalla name"
+                                    name="makhalla"
+                                    value={form.makhalla}
+                                    onChange={handleChange}
+                                />
+                            </div>
 
-                        <input
-                            type="text"
-                            placeholder="Delivery Address"
-                            name="address"
-                            value={form.address}
-                            onChange={handleChange}
-                        />
+                            <div className="form-group">
+                                <label>House / Building</label>
+                                <input
+                                    type="text"
+                                    placeholder="House #"
+                                    name="house"
+                                    value={form.house}
+                                    onChange={handleChange}
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label>Apartment / Door</label>
+                                <input
+                                    type="text"
+                                    placeholder="Apt #"
+                                    name="apartment"
+                                    value={form.apartment}
+                                    onChange={handleChange}
+                                />
+                            </div>
+
+                            <div className="form-group-full distance-box">
+                                <label>Delivery Distance: {form.distance} km {form.distance <= 3 ? "(Free!)" : "($15 fee)"}</label>
+                                <input
+                                    type="range"
+                                    min="1"
+                                    max="50"
+                                    name="distance"
+                                    value={form.distance}
+                                    onChange={handleChange}
+                                />
+                            </div>
+
+                            <div className="form-group-full">
+                                <label>Additional Notes / Delivery Instructions</label>
+                                <textarea
+                                    placeholder="Tell us more (e.g., door code, specific landmark, or preferences)"
+                                    name="comment"
+                                    value={form.comment}
+                                    onChange={handleChange}
+                                    className="checkout-textarea"
+                                    rows="3"
+                                />
+                                <small className="input-hint">Specify details to help our courier find you faster.</small>
+                            </div>
+                        </div>
 
                         {/* PAYMENT */}
 
-                        <div className="payment-methods">
-                            <label>
-                                <input
-                                    type="radio"
-                                    name="payment"
-                                    value="card"
-                                    checked={form.payment === "card"}
-                                    onChange={handleChange}
-                                />
-                                Card Payment
-                            </label>
-                            <label>
-                                <input
-                                    type="radio"
-                                    name="payment"
-                                    value="cash"
-                                    checked={form.payment === "cash"}
-                                    onChange={handleChange}
-                                />
-                                Cash at Pickup Point
-                            </label>
+                        <div className="payment-options-new">
+                            <div
+                                className={`pay-card ${form.payment === 'account' ? 'active' : ''}`}
+                                onClick={() => setForm({ ...form, payment: 'account' })}
+                            >
+                                <div className="pay-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                </div>
+                                <div className="pay-info">
+                                    <span>Account Balance</span>
+                                    <small>Pay with linked FIMO account</small>
+                                </div>
+                                {form.payment === 'account' && <div className="pay-check">✓</div>}
+                            </div>
+
+                            <div
+                                className={`pay-card ${form.payment === 'cash' ? 'active' : ''}`}
+                                onClick={() => setForm({ ...form, payment: 'cash' })}
+                            >
+                                <div className="pay-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z" /><circle cx="12" cy="10" r="3" /></svg>
+                                </div>
+                                <div className="pay-info">
+                                    <span>Cash on Delivery</span>
+                                    <small>Pay at your doorstep</small>
+                                </div>
+                                {form.payment === 'cash' && <div className="pay-check">✓</div>}
+                            </div>
                         </div>
 
-                        {/* CARD PAYMENT INPUTS */}
-
-                        {form.payment === "card" && (
-                            <div className="card-payment">
-                                <input placeholder="Card Holder Name" />
-                                <input placeholder="Card Number" />
-                                <div className="card-row">
-                                    <input placeholder="MM/YY" />
-                                    <input placeholder="CVV" />
-                                </div>
-                            </div>
-                        )}
 
                         {/* PROMO CODE */}
 
@@ -211,13 +322,35 @@ const Buy = () => {
                             </button>
                         </div>
 
-                        {/* ORDER SUMMARY */}
-
-                        <div className="order-summary">
-                            <p>Items: {boughtItems.length}</p>
-                            <p>Total: ${total}</p>
-                            <p>Discount: -${discount}</p>
-                            <h3>Final: ${finalPrice}</h3>
+                        <div className="order-summary-box">
+                            <div className="summary-line">
+                                <span>Items Subtotal</span>
+                                <span>${total.toFixed(2)}</span>
+                            </div>
+                            {multiDiscount > 0 && (
+                                <div className="summary-line discount">
+                                    <span>Multi-buy Discount ({(multiDiscountRate * 100).toFixed(0)}%)</span>
+                                    <span>-${multiDiscount.toFixed(2)}</span>
+                                </div>
+                            )}
+                            {promoDiscount > 0 && (
+                                <div className="summary-line discount">
+                                    <span>Promo Code</span>
+                                    <span>-${promoDiscount.toFixed(2)}</span>
+                                </div>
+                            )}
+                            <div className="summary-line">
+                                <span>Delivery Fee</span>
+                                <span>{deliveryFee === 0 ? "FREE" : `$${deliveryFee}`}</span>
+                            </div>
+                            <div className="summary-total-final">
+                                <span>Estimated Total</span>
+                                <span>${finalPrice.toFixed(2)}</span>
+                            </div>
+                            <div className="delivery-time-hint">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
+                                Est. Delivery: 45 - 60 min
+                            </div>
                         </div>
 
                         {/* ACTIONS */}
@@ -227,8 +360,12 @@ const Buy = () => {
                                 Cancel
                             </button>
 
-                            <button onClick={confirmOrder}>
-                                Confirm Order
+                            <button
+                                className={`confirm-order-btn ${orderSuccess ? 'success' : ''}`}
+                                onClick={confirmOrder}
+                                disabled={orderSuccess}
+                            >
+                                {orderSuccess ? "Processing..." : (form.payment === 'account' ? "Proceed with Account Pay" : "Place Cash Order")}
                             </button>
                         </div>
                     </div>

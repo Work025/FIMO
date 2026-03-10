@@ -1,5 +1,16 @@
 {
     "framework": "create-react-app",
     "buildCommand": "GENERATE_SOURCEMAP=false npm run build",
-    "outputDirectory": "build"
+    "outputDirectory": "build",
+    "headers": [
+        {
+            "source": "/(.*)",
+            "headers": [
+                {
+                    "key": "Referrer-Policy",
+                    "value": "no-referrer"
+                }
+            ]
+        }
+    ]
 }

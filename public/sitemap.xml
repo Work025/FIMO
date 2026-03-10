@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://fimo-style.vercel.app/</loc>
+    <lastmod>2024-03-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://fimo-style.vercel.app/shop</loc>
+    <lastmod>2024-03-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://images.iimg.live/images/vibrant-shot-6282.webp</image:loc>
+      <image:title>Vibrant Shot - FIMO Premium Collection</image:title>
+      <image:caption>High-quality fashion photography of FIMO vibrant collection.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.iimg.live/images/fantastic-art-6335.webp</image:loc>
+      <image:title>Fantastic Art - FIMO Design</image:title>
+      <image:caption>Artistic apparel design from FIMO's masterpiece series.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.iimg.live/images/dynamic-vision-6924.webp</image:loc>
+      <image:title>Dynamic Vision - FIMO Activewear</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.iimg.live/images/perfect-vision-9670.webp</image:loc>
+      <image:title>Perfect Vision - FIMO Eyewear and Accessories</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.iimg.live/images/ultimate-masterpiece-9880.webp</image:loc>
+      <image:title>Ultimate Masterpiece - FIMO Limited Edition</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.iimg.live/images/spectacular-picture-5593.webp</image:loc>
+      <image:title>Spectacular Picture - FIMO Lifestyle</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.iimg.live/images/brilliant-photography-2487.webp</image:loc>
+      <image:title>Brilliant Photography - FIMO Catalog</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.iimg.live/images/radiant-vision-6385.webp</image:loc>
+      <image:title>Radiant Vision - FIMO Collection</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://fimo-style.vercel.app/about</loc>
+    <lastmod>2024-03-10</lastmod>
+    <priority>0.5</priority>
+  </url>
+</urlset>

@@ -6,7 +6,7 @@ import TshirtModel from "./TshirtModel";
 import "../Styles/MakeStyle.css";
 
 function MakeStyle() {
-    const { addToCart, t } = useGlobalContext();
+    const { addToCart, cartItems, t } = useGlobalContext();
     const [config, setConfig] = useState({
         color: "#ffffff",
         size: "M",
@@ -15,6 +15,10 @@ function MakeStyle() {
     const [autoRotate, setAutoRotate] = useState(true);
     const [promoInput, setPromoInput] = useState("");
     const [discount, setDiscount] = useState(0); // 0.1 for 10%
+
+    // Auto discount based on potential cart size
+    const potentialTotalItems = cartItems.length + 1;
+    const autoDiscount = potentialTotalItems > 3 ? 0.15 : (potentialTotalItems === 3 ? 0.10 : 0);
 
     const colors = [
         { name: "Pure White", value: "#ffffff" },
@@ -29,15 +33,15 @@ function MakeStyle() {
     const fabrics = ["Premium Cotton", "Organic Linen", "Eco-Blend"];
 
     const handleApplyPromo = () => {
-        const normalizedInput = promoInput.replace(/\s+/g, "").toUpperCase().replace(/O/g, "0");
-        const validCode = "AKMALZOR F1M0".replace(/\s+/g, "").toUpperCase().replace(/O/g, "0");
-
-        if (normalizedInput === validCode) {
-            setDiscount(0.1);
-            alert("Promo code applied! 10% discount added.");
+        const upPromo = promoInput.trim().toUpperCase();
+        if (upPromo === "AKMALZOR") {
+            setDiscount(0.2); // 20%
+            alert(t('discount_applied') || "20% Discount Applied!");
+        } else if (upPromo === "F1M0") {
+            setDiscount(0.5); // 50% in studio as $50 would be more than price
+            alert("Studio Special: 50% Discount Applied!");
         } else {
-            setDiscount(0);
-            alert("Invalid promo code.");
+            alert(t('invalid_promo') || "Invalid Promo Code");
         }
     };
 
@@ -47,7 +51,8 @@ function MakeStyle() {
     };
 
     const basePrice = 45.00;
-    const finalPrice = basePrice * (1 - discount);
+    const finalDiscount = Math.max(discount, autoDiscount);
+    const finalPrice = basePrice * (1 - finalDiscount);
 
     return (
         <div className="makestyle-page">
@@ -141,7 +146,10 @@ function MakeStyle() {
                 </div>
 
                 <div className="control-section promo-section">
-                    <h3>{t('promo_code')}</h3>
+                    <div className="section-header">
+                        <h3>{t('promo_code')}</h3>
+                        {autoDiscount > 0 && <span className="auto-discount-tag">{(autoDiscount * 100)}% Multi-buy Active!</span>}
+                    </div>
                     <div className="promo-input-wrapper">
                         <input
                             type="text"
@@ -158,6 +166,9 @@ function MakeStyle() {
                         )}
                     </div>
                     {discount > 0 && <p className="promo-success">10% {t('discount_applied') || 'discount applied!'}</p>}
+                    {potentialTotalItems < 3 && (
+                        <p className="promo-hint">Buy {3 - potentialTotalItems} more for 10% off!</p>
+                    )}
                 </div>
 
                 <div className="makestyle-footer">
@@ -166,7 +177,7 @@ function MakeStyle() {
                         <div className="price-row">
                             <span className="currency">$</span>
                             <span className="value">{finalPrice.toFixed(2)}</span>
-                            {discount > 0 && <span className="original-price">${basePrice.toFixed(2)}</span>}
+                            {finalDiscount > 0 && <span className="original-price">${basePrice.toFixed(2)}</span>}
                         </div>
                     </div>
                     <button
@@ -176,6 +187,7 @@ function MakeStyle() {
                             title: "Custom Design",
                             about: `${config.color} | ${config.size} | ${config.fabric}`,
                             price: finalPrice,
+                            img: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=300&auto=format&fit=crop",
                             config: config
                         })}
                     >

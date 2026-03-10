@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../Styles/Features.css';
 import { useGlobalContext } from '../context/GlobalContext';
 import featuresData from '../Data/SHoise.json';
@@ -34,6 +34,23 @@ const Features = () => {
         );
     }
 
+    // const [data, setData] = useState([])
+
+    // const getAllUsers = async () => {
+    //     try {
+    //         const res = await fetch("http://localhost:5000/cards")
+    //         const data = await res.json()
+    //         setData(data)
+            
+    //     } catch (err) {
+    //         console.log(err)
+    //     }
+    // }
+
+    // useEffect(() => {
+    //     getAllUsers()
+    // }, [])
+
     return (
         <section id="features" className="features-section">
             <div className="features-container">
@@ -46,7 +63,7 @@ const Features = () => {
                     </p>
                 </div>
                 <div className="features-grid">
-                    {filteredFeatures.map((item, index) => (
+                    {featuresData.map((item, index) => (
                         <div className="feature-card fade-up" key={item.id} style={{ animationDelay: `${index * 0.1}s` }}>
                             <div className="feature-img-container">
                                 <img

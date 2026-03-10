@@ -6,6 +6,13 @@ export const useGlobalContext = () => useContext(GlobalContext);
 
 export const GlobalProvider = ({ children }) => {
     const [language, setLanguage] = useState(() => localStorage.getItem('fimo_language') || 'EN');
+    const [user, setUser] = useState(() => {
+        try {
+            return JSON.parse(localStorage.getItem('fimo_user')) || null;
+        } catch {
+            return null;
+        }
+    });
     const [searchQuery, setSearchQuery] = useState('');
     const [cartItems, setCartItems] = useState(() => {
         try {
@@ -46,6 +53,14 @@ export const GlobalProvider = ({ children }) => {
         localStorage.setItem('boughtItems', JSON.stringify(boughtItems));
     }, [boughtItems]);
 
+    useEffect(() => {
+        if (user) {
+            localStorage.setItem('fimo_user', JSON.stringify(user));
+        } else {
+            localStorage.removeItem('fimo_user');
+        }
+    }, [user]);
+
     const translations = {
         EN: {
             home: "HOME",
@@ -63,6 +78,11 @@ export const GlobalProvider = ({ children }) => {
             view_collection: "VIEW COLLECTION",
             buy_now: "BUY NOW",
             remove: "REMOVE",
+            profile: "PROFILE",
+            login: "LOGIN WITH GOOGLE",
+            logout: "LOGOUT",
+            welcome: "Welcome",
+            orders: "MY ORDERS",
             organic_cotton: "100% Organic Cotton",
             organic_cotton_desc: "Breathable, soft, and sustainable fabric for everyday comfort.",
             premium_stitching: "Premium Stitching",
@@ -121,6 +141,11 @@ export const GlobalProvider = ({ children }) => {
             view_collection: "TO'PLAMNI KO'RISH",
             buy_now: "HOZIR SOTIB OLISH",
             remove: "O'CHIRISH",
+            profile: "PROFIL",
+            login: "GOOGLE ORQALI KIRISH",
+            logout: "CHIQISH",
+            welcome: "Xush kelibsiz",
+            orders: "MENING BUYURTMALARIM",
             organic_cotton: "100% Tabiiy Paxta",
             organic_cotton_desc: "Kundalik qulaylik uchun nafas oladigan, yumshoq va barqaror mato.",
             premium_stitching: "Premium Tikuv",
@@ -179,6 +204,11 @@ export const GlobalProvider = ({ children }) => {
             view_collection: "ПОСМОТРЕТЬ КОЛЛЕКЦИЮ",
             buy_now: "КУПИТЬ СЕЙЧАС",
             remove: "УДАЛИТЬ",
+            profile: "ПРОФИЛЬ",
+            login: "ВОЙТИ ЧЕРЕЗ GOOGLE",
+            logout: "ВЫЙТИ",
+            welcome: "Добро пожаловать",
+            orders: "МОИ ЗАКАЗЫ",
             organic_cotton: "100% Органический хлопок",
             organic_cotton_desc: "Дышащая, мягкая и экологичная ткань для повседневного комфорта.",
             premium_stitching: "Премиальная прошивка",
@@ -255,6 +285,15 @@ export const GlobalProvider = ({ children }) => {
         });
     };
 
+    const loginUser = (userData) => {
+        setUser(userData);
+    };
+
+    const logoutUser = () => {
+        setUser(null);
+        localStorage.removeItem('fimo_user');
+    };
+
     const toggleBuy = (product) => {
         setBoughtItems(prev => {
             const isBought = prev.find(item => item.id === product.id);
@@ -283,6 +322,9 @@ export const GlobalProvider = ({ children }) => {
         boughtItems,
         toggleBuy,
         clearBought,
+        user,
+        loginUser,
+        logoutUser,
         t
     };
 
