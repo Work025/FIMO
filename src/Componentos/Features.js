@@ -18,7 +18,7 @@ const Features = () => {
     } = useGlobalContext();
 
     // Filter qilish
-    features.filter((item) =>
+    let filteredFeatures = features.filter((item) =>
         item.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
@@ -29,7 +29,7 @@ const Features = () => {
 
     // Price filter
     if (filterPrice) {
-        filteredFeatures = filteredFeatures.sort((a, b) =>
+        filteredFeatures = [...filteredFeatures].sort((a, b) =>
             filterPrice === "low" ? a.price - b.price : b.price - a.price
         );
     }
@@ -63,7 +63,7 @@ const Features = () => {
                     </p>
                 </div>
                 <div className="features-grid">
-                    {featuresData.map((item, index) => (
+                    {filteredFeatures.map((item, index) => (
                         <div className="feature-card fade-up" key={item.id} style={{ animationDelay: `${index * 0.1}s` }}>
                             <div className="feature-img-container">
                                 <img
