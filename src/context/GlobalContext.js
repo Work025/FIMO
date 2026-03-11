@@ -123,7 +123,19 @@ export const GlobalProvider = ({ children }) => {
             clear: "CLEAR",
             discount_applied: "discount applied!",
             estimated_total: "ESTIMATED TOTAL",
-            confirm_design: "CONFIRM DESIGN"
+            confirm_design: "CONFIRM DESIGN",
+            blog_post1_title: "The Future of Organic Cotton",
+            blog_post1_excerpt: "Discover how sustainable farming is changing the way we think about everyday apparel and comfort.",
+            blog_post1_content: "At FIMO, we believe that high-performance sportswear starts with the soil. Our latest collection is crafted from 100% GOTS-certified organic cotton, ensuring breathability for your toughest workouts and softest recovery days. We are committed to a zero-waste manufacturing process.",
+            blog_post2_title: "Dyeing Without the Damage",
+            blog_post2_excerpt: "Our new eco-friendly dyeing process eliminates harsh chemicals while maintaining vibrant, lasting colors.",
+            blog_post2_content: "Traditional textile dyeing is one of the world's most polluting processes. FIMO's new 'Aqua-Save' technology reduces water usage by 90% and uses plant-based pigments. This means your gym gear stays vibrant longer without harming your skin or the planet.",
+            blog_post3_title: "Designing the Perfect Fit",
+            blog_post3_excerpt: "A behind-the-scenes look at how FIMO engineers the ultimate silhouette for every body type.",
+            blog_post3_content: "Clothing shouldn't restrict your movement; it should enhance it. Our design lab uses 3D body scanning to create the 'FIMO Kinetic Cut'—a unique paneling system that moves with your muscles. Whether it's a marathon or a coffee run, we've got you covered.",
+            sustainability: "Sustainability",
+            innovation: "Innovation",
+            design: "Design"
         },
         UZ: {
             home: "BOSH SAHIFA",
@@ -186,7 +198,19 @@ export const GlobalProvider = ({ children }) => {
             clear: "TOZALASH",
             discount_applied: "chegirma qo'llanildi!",
             estimated_total: "TAXMINIY JAMI",
-            confirm_design: "DIZAYNNI TASDIQLASH"
+            confirm_design: "DIZAYNNI TASDIQLASH",
+            blog_post1_title: "Organik paxtaning kelajagi",
+            blog_post1_excerpt: "Barqaror dehqonchilik kundalik kiyim va qulaylik haqidagi fikrimizni qanday o'zgartirayotganini bilib oling.",
+            blog_post1_content: "FIMO-da biz yuqori samarali sport kiyimlari tuproqdan boshlanishiga ishonamiz. Bizning so'nggi to'plamimiz 100% GOTS sertifikatiga ega organik paxtadan tayyorlangan bo'lib, eng qiyin mashg'ulotlaringiz va eng yumshoq dam olish kunlaringiz uchun nafas olishni ta'minlaydi. Biz chiqindisiz ishlab chiqarish jarayoniga sodiqmiz.",
+            blog_post2_title: "Zararsiz bo'yash",
+            blog_post2_excerpt: "Yangi ekologik toza bo'yash jarayonimiz yorqin va mustahkam ranglarni saqlab qolgan holda qattiq kimyoviy moddalarni yo'q qiladi.",
+            blog_post2_content: "An'anaviy to'qimachilikni bo'yash dunyodagi eng ifloslantiruvchi jarayonlardan biridir. FIMO-ning yangi 'Aqua-Save' texnologiyasi suv sarfini 90% ga kamaytiradi va o'simlik asosidagi pigmentlardan foydalanadi. Bu sizning sport kiyimingiz teringizga yoki sayyoramizga zarar yetkazmasdan uzoqroq yorqin qolishini anglatadi.",
+            blog_post3_title: "Mukammal bichimni loyihalash",
+            blog_post3_excerpt: "FIMO har bir tana turi uchun qanday qilib mukammal siluetni yaratishi haqida sahna ortidagi ko'rinish.",
+            blog_post3_content: "Kiyim sizning harakatingizni cheklamasligi kerak; u uni kuchaytirishi kerak. Bizning dizayn laboratoriyamiz 'FIMO Kinetic Cut' — mushaklaringiz bilan birga harakatlanadigan noyob panel tizimini yaratish uchun 3D tana skaneridan foydalanadi. Marafon bo'ladimi yoki qahva ichishga chiqishmi, biz sizni himoya qildik.",
+            sustainability: "Ekologiya",
+            innovation: "Innovatsiya",
+            design: "Dizayn"
         },
         RU: {
             home: "ГЛАВНАЯ",
@@ -249,7 +273,19 @@ export const GlobalProvider = ({ children }) => {
             clear: "ОЧИСТИТЬ",
             discount_applied: "скидка применена!",
             estimated_total: "ИТОГО",
-            confirm_design: "ПОДТВЕРДИТЬ ДИЗАЙН"
+            confirm_design: "ПОДТВЕРДИТЬ ДИЗАЙН",
+            blog_post1_title: "Будущее органического хлопка",
+            blog_post1_excerpt: "Узнайте, как устойчивое земледелие меняет наше представление о повседневной одежде и комфорте.",
+            blog_post1_content: "В FIMO мы верим, что высокоэффективная спортивная одежда начинается с почвы. Наша последняя коллекция изготовлена из 100% органического хлопка, сертифицированного GOTS, что обеспечивает воздухопроницаемость для самых тяжелых тренировок и самых мягких дней восстановления. Мы стремимся к безотходному производственному процессу.",
+            blog_post2_title: "Окрашивание без вреда",
+            blog_post2_excerpt: "Наш новый экологически чистый процесс окрашивания исключает использование агрессивных химикатов, сохраняя при этом яркие и стойкие цвета.",
+            blog_post2_content: "Традиционное крашение текстиля — один из самых загрязняющих процессов в мире. Новая технология FIMO «Aqua-Save» сокращает потребление воды на 90% и использует пигменты на растительной основе. Это означает, что ваша спортивная экипировка дольше остается яркой, не нанося вреда вашей коже или планете.",
+            blog_post3_title: "Проектирование идеальной посадки",
+            blog_post3_excerpt: "Закулисный взгляд на то, как FIMO создает идеальный силуэт для любого типа фигуры.",
+            blog_post3_content: "Одежда не должна ограничивать ваши движения; она должна усиливать их. Наша дизайн-лаборатория использует 3D-сканирование тела для создания изделия «FIMO Kinetic Cut» — уникальной системы панелей, которая движется вместе с вашими мышцами. Будь то марафон или поход за кофе, мы позаботимся о вас.",
+            sustainability: "Экологичность",
+            innovation: "Инновации",
+            design: "Дизайн"
         }
     };
 
