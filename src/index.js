@@ -10,7 +10,7 @@ import { GlobalProvider } from './context/GlobalContext';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <GoogleOAuthProvider clientId="1014096098052-6p81jl2i07h6q943j7l2epjf2otg45fn.apps.googleusercontent.com">
+    <GoogleOAuthProvider clientId="1014096098052-62h79vc02l4c4cn1sdfbt4p5p8rsraks.apps.googleusercontent.com">
       <GlobalProvider>
         <App />
       </GlobalProvider>
