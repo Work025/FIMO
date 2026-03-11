@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../Styles/Features.css';
 import { useGlobalContext } from '../context/GlobalContext';
 import featuresData from '../Data/SHoise.json';
 
 const Features = () => {
+    const navigate = useNavigate();
     const [features] = useState(featuresData);
     const {
         t,
@@ -16,6 +18,14 @@ const Features = () => {
         filterPrice,
         filterCategory
     } = useGlobalContext();
+
+    const getPrice = (title) => {
+        if (title.includes("Masterpiece") || title.includes("Ultimate")) return 25;
+        if (title.includes("Brilliant") || title.includes("Spectacular")) return 22;
+        if (title.includes("Vision") || title.includes("Photography")) return 18;
+        if (title.includes("Art") || title.includes("Shot") || title.includes("Snap")) return 12;
+        return 15; // default
+    };
 
     // Filter qilish
     let filteredFeatures = features.filter((item) =>
@@ -76,7 +86,7 @@ const Features = () => {
                                     <div className="feature-badge">#{item.number}</div>
                                     <button
                                         className={`feature-like-btn ${likedItems.find(l => l.id === item.id) ? 'active' : ''}`}
-                                        onClick={() => toggleLike(item)}
+                                        onClick={() => toggleLike({ ...item, price: getPrice(item.title) })}
                                     >
                                         <svg width="20" height="20" viewBox="0 0 24 24" fill={likedItems.find(l => l.id === item.id) ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                                     </button>
@@ -84,14 +94,15 @@ const Features = () => {
                             </div>
                             <div className="feature-content">
                                 <h3 className="feature-card-title">{item.title}</h3>
+                                <p className="feature-price">${getPrice(item.title)}</p>
                                 <div className="feature-actions-group">
                                     <button
                                         className={`feature-buy-btn ${boughtItems.find(b => b.id === item.id) ? 'bought' : ''}`}
-                                        onClick={() => toggleBuy(item)}
+                                        onClick={() => { toggleBuy({ ...item, price: getPrice(item.title) }); navigate('/shop'); }}
                                     >
                                         {boughtItems.find(b => b.id === item.id) ? t('ordered') || 'Ordered' : t('buy_now')}
                                     </button>
-                                    <button className="feature-cart-btn" onClick={() => addToCart({ ...item, img: item.url, price: 45 })}>
+                                    <button className="feature-cart-btn" onClick={() => addToCart({ ...item, img: item.url, price: getPrice(item.title) })}>
                                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
                                     </button>
                                 </div>

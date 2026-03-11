@@ -21,7 +21,7 @@ const Buy = () => {
     const [discount, setDiscount] = useState(0);
 
     /* PRICE CALCULATION */
-    const basePrices = boughtItems.map(item => item.price || 120);
+    const basePrices = boughtItems.map(item => item.price || 12); // Updated to $12
     const total = basePrices.reduce((a, b) => a + b, 0);
 
     // Multi-buy discount
@@ -187,7 +187,7 @@ const Buy = () => {
                                         <p>{item.category || "Original Style"}</p>
                                     </div>
                                     <div className="item-row-price">
-                                        <span>${(item.price || 120).toFixed(2)}</span>
+                                        <span>${(item.price || 12).toFixed(2)}</span>
                                     </div>
                                 </div>
                             ))}

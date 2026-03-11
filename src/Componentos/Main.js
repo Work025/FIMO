@@ -15,7 +15,7 @@ function Main() {
             title: "URBAN ESSENTIAL",
             about: "Ultra-soft 100% organic cotton. A minimalist staple for any wardrobe.",
             size: ["S", "M", "L", "XL"],
-            price: 25.00,
+            price: 15.00,
             category: "Classic"
         },
         {
@@ -24,7 +24,7 @@ function Main() {
             title: "PRIME OVERSIZED",
             about: "Heavyweight premium cotton with a relaxed, modern silhouette.",
             size: ["S", "M", "L", "XL"],
-            price: 30.00,
+            price: 22.00,
             category: "Premium"
         },
         {
@@ -33,7 +33,7 @@ function Main() {
             title: "SUMMER BREEZE",
             about: "Lightweight, breathable fabric designed for ultimate summer comfort.",
             size: ["S", "M", "L"],
-            price: 22.00,
+            price: 12.00,
             category: "Eco-Friendly"
         },
     ];

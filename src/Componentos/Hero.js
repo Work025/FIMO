@@ -62,6 +62,7 @@ function Hero() {
             about: "100% Cotton, Classic Fit, Black",
             size: ["S", "M", "L", "XL"],
             color: ["White", "Black", "Grey"],
+            price: 12
         },
         {
             img: tshirt2,
@@ -69,6 +70,7 @@ function Hero() {
             about: "Premium Cotton, Slim Fit, Black",
             size: ["S", "M", "L", "XL"],
             color: ["Black", "White"],
+            price: 18
         },
         {
             img: tshirt3,
@@ -76,6 +78,7 @@ function Hero() {
             about: "Comfortable Cotton, Relaxed Fit, Orange",
             size: ["S", "M", "L"],
             color: ["Orange", "Yellow"],
+            price: 15
         },
         {
             img: tshirt4,
@@ -83,6 +86,7 @@ function Hero() {
             about: "Comfortable Cotton, Relaxed Fit, Grey",
             size: ["S", "M", "L"],
             color: ["Grey", "White"],
+            price: 14
         },
         {
             img: tshirt5,
@@ -90,6 +94,7 @@ function Hero() {
             about: "Comfortable Cotton, Relaxed Fit, Brown",
             size: ["S", "M", "L"],
             color: ["Light Brown"],
+            price: 16
         },
     ];
 
@@ -152,7 +157,7 @@ function Hero() {
                                 title: shoise[activeIndex].title,
                                 about: shoise[activeIndex].about,
                                 img: shoise[activeIndex].img,
-                                price: 29.99
+                                price: shoise[activeIndex].price
                             })}>
                                 <span>{t('add_to_bag')}</span>
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
@@ -164,7 +169,7 @@ function Hero() {
                                     title: shoise[activeIndex].title,
                                     about: shoise[activeIndex].about,
                                     img: shoise[activeIndex].img,
-                                    price: 29.99
+                                    price: shoise[activeIndex].price
                                 })}
                             >
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill={likedItems.find(l => l.id === `hero-${activeIndex}`) ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>

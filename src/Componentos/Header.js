@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../context/GlobalContext";
 import featuresData from "../Data/SHoise.json"; // Features JSON
 import { useGoogleLogin } from '@react-oauth/google';
@@ -22,6 +22,8 @@ function Header() {
         logoutUser,
         t
     } = useGlobalContext();
+
+    const navigate = useNavigate();
 
     const [features] = useState(featuresData);
     const [menuOpen, setMenuOpen] = useState(false);
@@ -250,7 +252,12 @@ function Header() {
                                                 <span>TOTAL:</span>
                                                 <span>${cartItems.reduce((acc, item) => acc + item.price, 0).toFixed(2)}</span>
                                             </div>
-                                            <button className="checkout-btn">{t('buy_now')}</button>
+                                            <button 
+                                                className="checkout-btn" 
+                                                onClick={() => { navigate('/shop'); setActivePanel(null); }}
+                                            >
+                                                {t('buy_now')}
+                                            </button>
                                         </div>
                                     </div>
                                 ) : (
@@ -274,6 +281,14 @@ function Header() {
                                                 </div>
                                             </div>
                                         ))}
+                                        <div className="panel-footer">
+                                            <button 
+                                                className="checkout-btn" 
+                                                onClick={() => { navigate('/shop'); setActivePanel(null); }}
+                                            >
+                                                {t('buy_now')}
+                                            </button>
+                                        </div>
                                     </div>
                                 ) : (
                                     <div className="empty-state">
