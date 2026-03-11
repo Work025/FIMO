@@ -17,6 +17,8 @@ function Header() {
         removeFromCart,
         likedItems,
         toggleLike,
+        boughtItems,
+        toggleBuy,
         user,
         loginUser,
         logoutUser,
@@ -243,7 +245,15 @@ function Header() {
                                                 <div className="side-item-info">
                                                     <h4>{item.title}</h4>
                                                     <p className="price">${item.price}</p>
-                                                    <button className="remove-item" onClick={() => removeFromCart(item.cartId)}>{t('remove')}</button>
+                                                    <div className="side-item-actions">
+                                                        <button 
+                                                            className="mini-buy-btn" 
+                                                            onClick={() => { toggleBuy(item); navigate('/shop'); setActivePanel(null); }}
+                                                        >
+                                                            {boughtItems.find(b => b.id === item.id) ? t('ordered') : t('buy_now')}
+                                                        </button>
+                                                        <button className="remove-item" onClick={() => removeFromCart(item.cartId)}>{t('remove')}</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         ))}
@@ -277,7 +287,15 @@ function Header() {
                                                 <div className="side-item-info">
                                                     <h4>{item.title}</h4>
                                                     <p className="price">${item.price}</p>
-                                                    <button className="remove-item" onClick={() => toggleLike(item)}>{t('remove')}</button>
+                                                    <div className="side-item-actions">
+                                                        <button 
+                                                            className="mini-buy-btn" 
+                                                            onClick={() => { toggleBuy(item); navigate('/shop'); setActivePanel(null); }}
+                                                        >
+                                                            {boughtItems.find(b => b.id === item.id) ? t('ordered') : t('buy_now')}
+                                                        </button>
+                                                        <button className="remove-item" onClick={() => toggleLike(item)}>{t('remove')}</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         ))}

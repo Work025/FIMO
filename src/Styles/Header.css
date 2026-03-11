@@ -140,7 +140,7 @@
     transform: translateY(-2px);
     color: var(--h-white);
 }
-
+ 
 .badge {
     position: absolute;
     top: 0;
@@ -467,6 +467,32 @@
 .remove-item:hover {
     opacity: 1;
     text-decoration: underline;
+}
+
+.side-item-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.mini-buy-btn {
+    background: var(--h-white);
+    color: var(--h-black);
+    border: none;
+    padding: 5px 12px;
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    cursor: pointer;
+    text-transform: uppercase;
+    border-radius: 4px;
+    transition: 0.3s;
+}
+
+.mini-buy-btn:hover {
+    background: #e0e0e0;
+    transform: scale(1.05);
 }
 
 .panel-footer {
