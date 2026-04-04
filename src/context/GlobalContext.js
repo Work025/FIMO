@@ -41,8 +41,8 @@ export const GlobalProvider = ({ children }) => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // Production URL (replace with your Railway URL after deployment)
-    const API_URL = process.env.REACT_APP_API_URL || 'https://fimo-backend.up.railway.app/api'; 
+    // Production URL (Now live on Render!)
+    const API_URL = process.env.REACT_APP_API_URL || 'https://fimo.onrender.com/api'; 
     // Fallback for local development if needed: 'http://localhost:5000/api'
 
     useEffect(() => {
