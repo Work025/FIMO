@@ -11,13 +11,13 @@
     padding: 2rem 0 4rem 0;
 }
 
-.aside .overlay {
+.aside-overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at center, #1a1a1a 0%, #000 70%);
+    background: radial-gradient(circle at center, #0a0a0a 0%, #000 80%);
     z-index: 1;
 }
 
@@ -26,12 +26,18 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 15vw;
-    font-weight: 900;
-    color: rgba(255, 255, 255, 0.08);
+    font-size: 16vw;
+    font-weight: 950;
+    color: rgba(255, 255, 255, 0.04);
     z-index: 1;
     pointer-events: none;
-    letter-spacing: 1rem;
+    letter-spacing: 2rem;
+    animation: textPulse 8s ease-in-out infinite;
+}
+
+@keyframes textPulse {
+    0%, 100% { opacity: 0.04; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 0.08; transform: translate(-50%, -50%) scale(1.05); }
 }
 
 .aside-container {
@@ -47,13 +53,14 @@
 
 .aside-3d-model {
     position: relative;
-    width: 400px;
-    height: 500px;
+    width: 500px;
+    height: 600px;
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 3;
 }
+
 
 .glow-effect {
     position: absolute;
@@ -71,25 +78,39 @@
 /* Info Cards */
 .info-card {
     position: absolute;
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
     padding: 1.5rem;
-    width: 260px;
+    width: 280px;
     display: flex;
-    gap: 1rem;
+    gap: 1.2rem;
     align-items: flex-start;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     z-index: 4;
 }
 
 .info-card:hover {
-    background: rgba(255, 255, 255, 0.1);
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.08);
+    transform: perspective(1000px) rotateX(5deg) rotateY(5deg) translateY(-10px);
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.info-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent, rgba(255,255,255,0.1));
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    -webkit-mask-composite: xor;
+    pointer-events: none;
 }
 
 .info-icon {

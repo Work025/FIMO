@@ -15,44 +15,33 @@ function Hero() {
 
     const imgRef = useRef(null);
     const robotRef = useRef(null);
+    const heroRef = useRef(null);
 
     const handleMouseMove = (e) => {
+        if (heroRef.current) {
+            const { width, height } = heroRef.current.getBoundingClientRect();
+            const x = (e.clientX / width - 0.5) * 40; // 40px max
+            const y = (e.clientY / height - 0.5) * 40;
+            
+            heroRef.current.style.setProperty('--mx', `${x}px`);
+            heroRef.current.style.setProperty('--my', `${y}px`);
+        }
+
         if (!imgRef.current) return;
         const rect = imgRef.current.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
+        const rx = (e.clientX - rect.left - rect.width / 2) / 25;
+        const ry = (e.clientY - rect.top - rect.height / 2) / 25;
 
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-
-        const rotateX = -(y - centerY) / 20;
-        const rotateY = (x - centerX) / 20;
-
-        imgRef.current.style.transform = `
-            perspective(1000px)
-            rotateX(${rotateX}deg)
-            rotateY(${rotateY}deg)
-            scale(1.05)
-        `;
-
-        if (robotRef.current) {
-            robotRef.current.style.transform = `
-                translate(${rotateY * -2}px, ${rotateX * -2}px)
-            `;
-        }
+        imgRef.current.style.transform = `perspective(1200px) rotateX(${-ry}deg) rotateY(${rx}deg) scale(1.05)`;
     };
 
     const handleMouseLeave = () => {
-        if (!imgRef.current) return;
-        imgRef.current.style.transform = `
-            perspective(1000px)
-            rotateX(0deg)
-            rotateY(0deg)
-            scale(1)
-        `;
-        if (robotRef.current) {
-            robotRef.current.style.transform = `translate(0px, 0px)`;
+        if (heroRef.current) {
+            heroRef.current.style.setProperty('--mx', `0px`);
+            heroRef.current.style.setProperty('--my', `0px`);
         }
+        if (!imgRef.current) return;
+        imgRef.current.style.transform = `perspective(1200px) rotateX(0deg) rotateY(0deg) scale(1)`;
     };
 
     const shoise = [
@@ -118,10 +107,13 @@ function Hero() {
     };
 
     return (
-        <div className="hero">
+        <div className="hero" ref={heroRef} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
+            {/* Background Grid Layer */}
+            <div className="hero-grid-overlay"></div>
+            
             <div
                 className="hero-content"
-                style={{ backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.9) 20%, rgba(0,0,0,0.6) 100%), url("${heroBg}")` }}
+                style={{ backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.92) 20%, rgba(0,0,0,0.6) 100%), url("${heroBg}")` }}
             >
                 {/* LEFT PANEL */}
                 <div className="hero-about-list slide-in-left">
@@ -201,8 +193,6 @@ function Hero() {
                 {/* RIGHT PANEL */}
                 <div
                     className={`hero-imgs ${isFading ? "fade-out" : "fade-in"}`}
-                    onMouseMove={handleMouseMove}
-                    onMouseLeave={handleMouseLeave}
                 >
                     <div className="hero-glow"></div>
                     <div className="hero-main-img" ref={imgRef}>
@@ -214,7 +204,10 @@ function Hero() {
                 </div>
 
                 {/* Robot Decoration */}
-                <div className="hero-robot slide-in-right" ref={robotRef}>
+                <div 
+                    className="hero-robot slide-in-right" 
+                    ref={robotRef}
+                >
                     <img src={robot} alt="Mascot Robot" />
                 </div>
             </div>

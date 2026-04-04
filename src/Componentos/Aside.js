@@ -1,15 +1,17 @@
-import React, { Suspense } from "react";
-import { Canvas } from "@react-three/fiber";
+import React, { Suspense, useRef } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, Environment, ContactShadows } from "@react-three/drei";
 import TshirtModel from "./TshirtModel";
 import { useGlobalContext } from "../context/GlobalContext";
 import "../Styles/Aside.css";
 
+
 function Aside() {
     const { t } = useGlobalContext();
+
     return (
         <aside className="aside flex-center">
-            <div className="overlay"></div>
+            <div className="aside-overlay"></div>
 
             {/* Title / Background Text */}
             <div className="aside-bg-text">
@@ -42,49 +44,35 @@ function Aside() {
 
                 {/* React Three Fiber 3D Canvas */}
                 <div className="aside-3d-model">
-                    <Canvas camera={{ position: [0, 0, 6], fov: 45 }}>
-                        <ambientLight intensity={0.4} />
-
+                    <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
+                        <ambientLight intensity={0.5} />
+                        <pointLight position={[10, 10, 10]} intensity={1} />
                         <spotLight
-                            position={[5, 10, 5]}
-                            angle={0.3}
+                            position={[10, 10, 10]}
+                            angle={0.15}
                             penumbra={1}
-                            intensity={2}
-                            castShadow
-                            color="#000"
-                        />
-
-                        <spotLight
-                            position={[-5, 5, 5]}
-                            angle={0.3}
-                            penumbra={1}
-                            intensity={1.2}
-                            color="#555555"
+                            intensity={0.5}
                         />
 
                         <Suspense fallback={null}>
-                            {/* 🔥 Model yanayam kattalashtirildi */}
-                            <TshirtModel scale={11} />
-
-                            <Environment preset="studio" />
-
+                            <TshirtModel />
+                            <Environment preset="city" />
                             <ContactShadows
                                 position={[0, -4.2, 0]}
-                                opacity={0.8}
-                                scale={25}
-                                blur={3}
-                                far={5}
-                                color="#000000"
+                                opacity={0.6}
+                                scale={20}
+                                blur={2.5}
+                                far={4}
                             />
                         </Suspense>
 
                         <OrbitControls
                             enableZoom={false}
                             autoRotate
-                            autoRotateSpeed={1.0}
+                            autoRotateSpeed={0.8}
                             enablePan={false}
-                            maxPolarAngle={Math.PI / 2 + 0.1}
-                            minPolarAngle={Math.PI / 2 - 0.5}
+                            maxPolarAngle={Math.PI / 2}
+                            minPolarAngle={Math.PI / 2}
                         />
                     </Canvas>
                     <div className="glow-effect"></div>

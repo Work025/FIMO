@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
+import axios from 'axios';
 
 const GlobalContext = createContext();
 
@@ -37,6 +38,13 @@ export const GlobalProvider = ({ children }) => {
         }
     });
 
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    // Production URL (replace with your Railway URL after deployment)
+    const API_URL = process.env.REACT_APP_API_URL || 'https://fimo-backend.up.railway.app/api'; 
+    // Fallback for local development if needed: 'http://localhost:5000/api'
+
     useEffect(() => {
         localStorage.setItem('fimo_language', language);
     }, [language]);
@@ -60,6 +68,23 @@ export const GlobalProvider = ({ children }) => {
             localStorage.removeItem('fimo_user');
         }
     }, [user]);
+
+    // Fetch products from backend
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                setLoading(true);
+                const res = await axios.get(`${API_URL}/products`);
+                setProducts(res.data);
+            } catch (err) {
+                console.error('Error fetching products:', err);
+                // Fallback or error state could be handled here
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchProducts();
+    }, []);
 
     const translations = {
         EN: {
@@ -361,6 +386,8 @@ export const GlobalProvider = ({ children }) => {
         user,
         loginUser,
         logoutUser,
+        products,
+        loading,
         t
     };
 

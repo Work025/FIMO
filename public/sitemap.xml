@@ -47,9 +47,4 @@
       <image:title>Radiant Vision - FIMO Collection</image:title>
     </image:image>
   </url>
-  <url>
-    <loc>https://fimo-coral.vercel.app/about</loc>
-    <lastmod>2024-03-10</lastmod>
-    <priority>0.5</priority>
-  </url>
 </urlset>

@@ -81,7 +81,6 @@ function Header() {
             <nav className="header-center">
                 <ul className="header-nav-list">
                     <li><NavLink to="/" end>{t('home')}</NavLink></li>
-                    <li><NavLink to="/blog">{t('blog')}</NavLink></li>
                     <li><NavLink to="/shop">{t('shop')}</NavLink></li>
                     <li><NavLink to="/make">{t('customize')}</NavLink></li>
                     <li><NavLink to="/card">{t('features')}</NavLink></li>
@@ -324,7 +323,6 @@ function Header() {
             <div className={`mobile-nav ${menuOpen ? "open" : ""}`}>
                 <ul className="mobile-ul">
                     <li><NavLink to="/" onClick={closeMenu}>{t('home')}</NavLink></li>
-                    <li><NavLink to="/blog" onClick={closeMenu}>{t('blog')}</NavLink></li>
                     <li><NavLink to="/shop" onClick={closeMenu}>{t('shop')}</NavLink></li>
                     <li><NavLink to="/buy" onClick={closeMenu}>{t('orders') || 'Orders'}</NavLink></li>
                     <li><NavLink to="/make" onClick={closeMenu}>{t('customize')}</NavLink></li>

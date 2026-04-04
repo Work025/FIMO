@@ -38,7 +38,6 @@ function Footer() {
                             <ul>
                                 <li><NavLink to="/">{t('home')}</NavLink></li>
                                 <li><NavLink to="/shop">{t('shop')}</NavLink></li>
-                                <li><NavLink to="/blog">{t('blog')}</NavLink></li>
                             </ul>
                         </div>
                         <div className="footer-nav-col">
