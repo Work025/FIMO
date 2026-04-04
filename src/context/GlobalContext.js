@@ -346,9 +346,54 @@ export const GlobalProvider = ({ children }) => {
         });
     };
 
-    const loginUser = (userData) => {
+    const loginUser = async (userData) => {
         setUser(userData);
+        // Sync with backend on login
+        try {
+            const res = await axios.post(`${API_URL}/users/login`, {
+                googleId: userData.sub,
+                displayName: userData.name,
+                email: userData.email,
+                picture: userData.picture,
+                likedItems,
+                cartItems,
+                boughtItems
+            });
+            
+            // If user has existing data on server, restore it
+            if (res.data) {
+                if (res.data.likedItems?.length > 0) setLikedItems(res.data.likedItems);
+                if (res.data.cartItems?.length > 0) setCartItems(res.data.cartItems);
+                if (res.data.boughtItems?.length > 0) setBoughtItems(res.data.boughtItems);
+            }
+        } catch (err) {
+            console.error('Error syncing user on login:', err);
+        }
     };
+
+    const syncWithBackend = async () => {
+        if (!user) return;
+        try {
+            await axios.post(`${API_URL}/users/sync`, {
+                googleId: user.sub || user.googleId,
+                likedItems,
+                cartItems,
+                boughtItems
+            });
+        } catch (err) {
+            console.error('Error syncing with backend:', err);
+        }
+    };
+
+    // Auto-sync when data changes
+    useEffect(() => {
+        if (user) {
+            const timer = setTimeout(() => {
+                syncWithBackend();
+            }, 2000); // Debounce sync
+            return () => clearTimeout(timer);
+        }
+    }, [likedItems, cartItems, boughtItems, user]);
 
     const logoutUser = () => {
         setUser(null);

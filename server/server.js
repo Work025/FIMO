@@ -30,6 +30,19 @@ const productSchema = new mongoose.Schema({
 
 const Product = mongoose.model('Product', productSchema);
 
+// User Schema
+const userSchema = new mongoose.Schema({
+    googleId: String,
+    displayName: String,
+    email: String,
+    picture: String,
+    likedItems: { type: Array, default: [] },
+    cartItems: { type: Array, default: [] },
+    boughtItems: { type: Array, default: [] }
+});
+
+const User = mongoose.model('User', userSchema);
+
 const fs = require('fs');
 const path = require('path');
 
@@ -48,6 +61,44 @@ app.get('/api/products', async (req, res) => {
         const rawData = fs.readFileSync(dataPath, 'utf8');
         const products = JSON.parse(rawData);
         res.json(products);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+// User Login / Sync
+app.post('/api/users/login', async (req, res) => {
+    const { googleId, displayName, email, picture, likedItems, cartItems, boughtItems } = req.body;
+    try {
+        let user = await User.findOne({ googleId });
+        if (user) {
+            // Update existing user but keep their remote data if it exists
+            user.displayName = displayName;
+            user.picture = picture;
+            // Optionally merge or overwrite local data with remote
+            await user.save();
+            return res.status(200).json(user);
+        } else {
+            // Create new user
+            user = new User({ googleId, displayName, email, picture, likedItems, cartItems, boughtItems });
+            await user.save();
+            return res.status(201).json(user);
+        }
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+// Sync data (save)
+app.post('/api/users/sync', async (req, res) => {
+    const { googleId, likedItems, cartItems, boughtItems } = req.body;
+    try {
+        const user = await User.findOneAndUpdate(
+            { googleId },
+            { likedItems, cartItems, boughtItems },
+            { new: true }
+        );
+        res.status(200).json(user);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
